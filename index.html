@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investment & Portfolio Management - Midterm Quiz</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; color: #333; line-height: 1.6; }
+  .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+
+  /* Header */
+  .header { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white; padding: 40px 30px; border-radius: 16px; margin-bottom: 30px; text-align: center; }
+  .header h1 { font-size: 1.8em; margin-bottom: 8px; }
+  .header p { opacity: 0.9; font-size: 1.1em; }
+
+  /* Progress bar */
+  .progress-bar-container { background: #ddd; border-radius: 20px; height: 12px; margin-bottom: 30px; overflow: hidden; position: sticky; top: 10px; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  .progress-bar { background: linear-gradient(90deg, #2E75B6, #1F4E79); height: 100%; border-radius: 20px; transition: width 0.4s ease; width: 0%; }
+  .progress-text { text-align: center; font-size: 0.9em; color: #666; margin-bottom: 15px; }
+
+  /* Question card */
+  .question-card { background: white; border-radius: 12px; padding: 28px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border-left: 5px solid #2E75B6; transition: all 0.3s; }
+  .question-card.answered-correct { border-left-color: #2E7D32; }
+  .question-card.answered-wrong { border-left-color: #CC0000; }
+  .question-card.answered { opacity: 0.95; }
+  .q-number { font-size: 0.85em; color: #2E75B6; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .q-text { font-size: 1.05em; font-weight: 600; margin-bottom: 18px; color: #1a1a1a; }
+
+  /* Choices */
+  .choices { display: flex; flex-direction: column; gap: 10px; }
+  .choice-btn { display: flex; align-items: center; padding: 14px 18px; border: 2px solid #e0e0e0; border-radius: 10px; background: #fafafa; cursor: pointer; transition: all 0.2s; font-size: 0.95em; text-align: left; }
+  .choice-btn:hover:not(.disabled) { border-color: #2E75B6; background: #EBF5FB; transform: translateX(4px); }
+  .choice-btn .letter { font-weight: 700; color: #2E75B6; margin-right: 12px; min-width: 24px; }
+  .choice-btn.disabled { cursor: default; }
+  .choice-btn.selected-correct { border-color: #2E7D32; background: #E8F5E9; }
+  .choice-btn.selected-correct .letter { color: #2E7D32; }
+  .choice-btn.selected-wrong { border-color: #CC0000; background: #FFEBEE; }
+  .choice-btn.selected-wrong .letter { color: #CC0000; }
+  .choice-btn.show-correct { border-color: #2E7D32; background: #E8F5E9; }
+  .choice-btn.show-correct .letter { color: #2E7D32; }
+
+  /* Feedback */
+  .feedback { margin-top: 16px; padding: 16px; border-radius: 10px; font-size: 0.92em; display: none; animation: fadeIn 0.3s; }
+  .feedback.correct { background: #E8F5E9; border: 1px solid #A5D6A7; color: #1B5E20; }
+  .feedback.wrong { background: #FFF3E0; border: 1px solid #FFB74D; color: #E65100; }
+  .feedback-icon { font-size: 1.2em; margin-right: 6px; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+
+  /* Results */
+  #results { display: none; background: white; border-radius: 16px; padding: 40px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); text-align: center; margin-bottom: 30px; }
+  .score-circle { width: 180px; height: 180px; border-radius: 50%; margin: 20px auto; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 2.5em; font-weight: 800; color: white; }
+  .score-circle.excellent { background: linear-gradient(135deg, #2E7D32, #4CAF50); }
+  .score-circle.good { background: linear-gradient(135deg, #1565C0, #42A5F5); }
+  .score-circle.needs-work { background: linear-gradient(135deg, #E65100, #FF9800); }
+  .score-circle.poor { background: linear-gradient(135deg, #B71C1C, #EF5350); }
+  .score-circle small { font-size: 0.35em; font-weight: 400; opacity: 0.9; }
+  .score-label { font-size: 1.3em; margin: 15px 0 5px; font-weight: 600; }
+  .score-detail { color: #666; margin-bottom: 25px; }
+
+  #wrong-list { text-align: left; margin-top: 30px; }
+  #wrong-list h3 { color: #CC0000; margin-bottom: 15px; font-size: 1.1em; }
+  .wrong-item { background: #FFF8F0; border: 1px solid #FFB74D; border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+  .wrong-item .wi-q { font-weight: 600; margin-bottom: 6px; }
+  .wrong-item .wi-your { color: #CC0000; font-size: 0.9em; }
+  .wrong-item .wi-correct { color: #2E7D32; font-weight: 600; font-size: 0.9em; }
+  .wrong-item .wi-explain { color: #555; font-size: 0.88em; margin-top: 6px; }
+
+  /* Buttons */
+  .btn { display: inline-block; padding: 14px 36px; border-radius: 10px; border: none; font-size: 1.05em; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: linear-gradient(135deg, #1F4E79, #2E75B6); color: white; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(46,117,182,0.4); }
+  .btn-secondary { background: #f0f0f0; color: #333; margin-left: 10px; }
+  .btn-secondary:hover { background: #e0e0e0; }
+
+  #submit-btn { display: none; margin: 30px auto; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 600px) {
+    .container { padding: 12px; }
+    .header { padding: 25px 18px; }
+    .header h1 { font-size: 1.3em; }
+    .question-card { padding: 20px; }
+    .score-circle { width: 140px; height: 140px; font-size: 2em; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Investment & Portfolio Management</h1>
+    <p>Midterm Exam Practice Quiz - 45 Questions</p>
+  </div>
+
+  <div class="progress-text" id="progress-text">0 of 45 answered</div>
+  <div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
+
+  <div id="questions-container"></div>
+
+  <button class="btn btn-primary" id="submit-btn" onclick="showResults()">See My Results</button>
+
+  <div id="results">
+    <h2>Quiz Complete!</h2>
+    <div class="score-circle" id="score-circle"><span id="score-pct"></span><small>correct</small></div>
+    <div class="score-label" id="score-label"></div>
+    <div class="score-detail" id="score-detail"></div>
+    <div id="wrong-list"></div>
+    <button class="btn btn-primary" onclick="location.reload()">Try Again</button>
+    <button class="btn btn-secondary" onclick="scrollToFirst()">Review Questions</button>
+  </div>
+</div>
+
+<script>
+const questions = [
+  { n:1, q:"Real assets in the economy include all but which one of the following?", c:{"a":"Land","b":"Buildings","c":"Consumer durables","d":"Common stock"}, ans:"d", exp:"Common stock is a financial asset (a paper claim on a company). Land, buildings, and consumer durables are all physical/real assets." },
+  { n:2, q:"The trading of stock that was previously issued takes place?", c:{"a":"In the secondary market","b":"In the primary market","c":"Usually with the assistance of an investment banker","d":"In the secondary market & in the primary market","e":"In the primary market & usually with the assistance of an investment banker"}, ans:"a", exp:"Previously issued stock is traded in the secondary market. The primary market is only for brand-new issues." },
+  { n:3, q:"____ is not a derivative security?", c:{"a":"A share of common stock","b":"A call option","c":"A futures contract","d":"All of the above are derivative securities"}, ans:"a", exp:"Common stock is direct ownership, not a derivative. Options and futures are derivatives because their value is derived from an underlying asset." },
+  { n:4, q:"Which of the following is not a money market security?", c:{"a":"U.S. Treasury bill","b":"Six month maturity certificate of deposit","c":"Common stock","d":"Banker's acceptance"}, ans:"c", exp:"Money market securities are short-term debt instruments. Common stock is equity with no maturity date." },
+  { n:5, q:"__________ assets generate net income to the economy and __________ assets define allocation of income among investors?", c:{"a":"Financial, financial","b":"Financial, real","c":"Real, financial","d":"Real, real"}, ans:"c", exp:"Real assets produce wealth (factories, equipment). Financial assets allocate who gets the income (stocks, bonds)." },
+  { n:6, q:"A purchase of a new issue of stock takes place?", c:{"a":"In the secondary market","b":"In the primary market","c":"Usually with the assistance of an investment banker","d":"In the secondary market and in the primary market","e":"In the primary market and usually with the assistance of an investment banker"}, ans:"e", exp:"New stock issues are sold in the primary market AND usually with the help of an investment banker who underwrites the offering. Answer (e) is the most complete." },
+  { n:7, q:"Firms raise capital by issuing stock?", c:{"a":"In the secondary market","b":"In the primary market","c":"To unwary investors","d":"Only on days when the market is up","e":"To unwary investors & only on days when the market is up"}, ans:"b", exp:"Companies raise money by selling new stock in the primary market. The company does NOT receive money from secondary market trades." },
+  { n:8, q:"Which of the following are financial assets: I. Debt securities, II. Equity securities, III. Derivative securities?", c:{"a":"Debt securities only","b":"Debt securities and II only","c":"II and III only","d":"Debt securities, II and III"}, ans:"d", exp:"ALL three are financial assets. Debt (bonds), equity (stocks), and derivatives (options, futures) are all paper claims, not physical assets." },
+  { n:9, q:"The following statements regarding the specialist are true?", c:{"a":"Specialists maintain a book listing outstanding unexecuted limit orders","b":"Specialists earn income from commissions and spreads in stock prices","c":"Specialists stand ready to trade at quoted bid and ask prices","d":"Specialists cannot trade in their own accounts","e":"All of the above are true except that Specialists cannot trade in their own accounts"}, ans:"e", exp:"Specialists do a, b, and c. But they CAN trade in their own accounts (d is false). So all are true EXCEPT d." },
+  { n:10, q:"Investment bankers?", c:{"a":"Act as intermediaries between issuers of stocks and investors","b":"Act as advisors to companies helping them analyze financial needs and find buyers for newly issued securities","c":"Accept deposits from savers and lend them out to companies","d":"Act as intermediaries & act as advisors to companies","e":"Act as intermediaries & advisors & accept deposits"}, ans:"d", exp:"Investment bankers do two things: act as middlemen AND advise companies. They do NOT accept deposits (that is commercial banking)." },
+  { n:11, q:"__________ are examples of financial intermediaries?", c:{"a":"Commercial banks","b":"Insurance companies","c":"Investment companies","d":"All of the above are financial intermediaries"}, ans:"d", exp:"Banks, insurance companies, and investment companies ALL pool money and invest it. They are all financial intermediaries." },
+  { n:12, q:"Security selection refers to the ________?", c:{"a":"Allocation of the investment portfolio across broad asset classes","b":"Analysis of the value of securities","c":"Choice of specific securities within each asset class","d":"Top down method of investing"}, ans:"c", exp:"Security selection = picking SPECIFIC investments within a category (e.g., which stocks to buy). Option (a) describes asset allocation." },
+  { n:13, q:"You purchased 100 shares of IBM common stock on margin at $70 per share. Initial margin is 50% and maintenance margin is 30%. Below what stock price level would you get a margin call?", c:{"a":"$21","b":"$50","c":"$49","d":"$80","e":"None of the above"}, ans:"b", exp:"Loan = 100 x $70 x 0.50 = $3,500. Margin call price = Loan / [Shares x (1 - MM)] = $3,500 / [100 x 0.70] = $50." },
+  { n:14, q:"The secondary market consists of?", c:{"a":"Transactions on the stock exchange","b":"Transactions in the OTC market","c":"Transactions through the investment banker","d":"Transactions on the stock exchange & transactions in the OTC market","e":"Stock exchange & OTC & through investment banker"}, ans:"d", exp:"The secondary market includes stock exchanges (NYSE) AND OTC markets (NASDAQ). Investment bankers work in the primary market." },
+  { n:15, q:"__________ are real assets?", c:{"a":"Bonds","b":"Production equipment","c":"Stocks","d":"Commercial paper"}, ans:"b", exp:"Production equipment is physical and produces goods. Bonds, stocks, and commercial paper are all financial assets (paper claims)." },
+  { n:16, q:"You sold short 200 shares of common stock at $60 per share. The initial margin is 60%. Your initial investment was?", c:{"a":"$4,800","b":"$12,000","c":"$5,600","d":"$7,200","e":"None of the above"}, ans:"d", exp:"Sale proceeds = 200 x $60 = $12,000. Your deposit (initial investment) = 60% x $12,000 = $7,200." },
+  { n:17, q:"A __________ represents an ownership share in a corporation?", c:{"a":"Call option","b":"Common stock","c":"Fixed-income security","d":"Preferred stock"}, ans:"b", exp:"Common stock = ownership share. Options are contracts, fixed-income is debt, preferred stock is a different ownership class." },
+  { n:18, q:"You purchased JNJ stock at $50 per share. The stock is currently selling at $65. Your gains may be protected by placing a __________ ?", c:{"a":"Stop-buy order","b":"Limit-buy order","c":"Market order","d":"Limit-sell order","e":"None of the above"}, ans:"e", exp:"To protect gains on a stock you OWN, you need a stop-loss (sell-stop) order. None of the options a-d is a stop-loss order, so 'none of the above' is correct." },
+  { n:19, q:"You sold JCP stock short at $80 per share. Your losses could be minimized by placing a __________?", c:{"a":"Limit-sell order","b":"Limit-buy order","c":"Stop-buy order","d":"Day-order","e":"None of the above"}, ans:"c", exp:"When short, you lose if the price RISES. A stop-buy order triggers a buy if the price rises to a set level, closing your short position. A limit-buy only executes at or below a price and cannot protect against rising prices." },
+  { n:20, q:"__________ portfolio management calls for holding diversified portfolios without spending effort attempting to improve investment performance through security analysis?", c:{"a":"Active","b":"Momentum","c":"Passive","d":"Market timing"}, ans:"c", exp:"Passive management = buy a diversified portfolio and hold it. No research, no stock picking, no trying to beat the market." },
+  { n:21, q:"Financial intermediaries exist because small investors cannot efficiently _________?", c:{"a":"Diversify their portfolios","b":"Gather information","c":"Monitor their portfolios","d":"All of the answers provide reasons why"}, ans:"d", exp:"Small investors cannot efficiently diversify, gather information, OR monitor investments. Financial intermediaries solve all three problems." },
+  { n:22, q:"Assume you purchased 200 shares of GE common stock on margin at $70 per share. If the initial margin is 55%, how much did you borrow from the broker?", c:{"a":"$6,000","b":"$4,000","c":"$7,700","d":"$7,000","e":"$6,300"}, ans:"e", exp:"Total = 200 x $70 = $14,000. You put up 55% = $7,700. Borrowed = $14,000 - $7,700 = $6,300." },
+  { n:23, q:"Surf City Software sells software to Microsoft for 1000 shares of Microsoft stock. Surf City exchanged a _____ asset for a _____ asset?", c:{"a":"Real, real","b":"Financial, financial","c":"Real, financial","d":"Financial, real"}, ans:"c", exp:"Software (a product) is a real asset. Microsoft stock is a financial asset. So: real to financial." },
+  { n:24, q:"The cost of buying and selling a stock consists of __________?", c:{"a":"Broker's commissions","b":"Dealer's bid-asked spread","c":"A price concession an investor may be forced to make","d":"Broker's commissions & dealer's bid-asked spread","e":"All three: commissions, bid-asked spread, and price concession"}, ans:"e", exp:"Trading costs have THREE parts: broker commissions, bid-ask spread, and possible price concessions." },
+  { n:25, q:"You purchased 300 shares on margin for $60 per share. Initial margin is 60%. What would your rate of return be if you sell at $45? Ignore interest.", c:{"a":"25.00%","b":"-33.33%","c":"44.31%","d":"-41.67%","e":"-54.22%"}, ans:"d", exp:"Initial equity = 300 x $60 x 0.60 = $10,800. Loan = $7,200. Sell proceeds = $13,500. Ending equity = $13,500 - $7,200 = $6,300. Return = ($6,300 - $10,800) / $10,800 = -41.67%." },
+  { n:26, q:"Which of the following orders instructs the broker to sell at or below a specified price?", c:{"a":"Limit-sell order","b":"Stop-loss","c":"Limit-buy order","d":"Stop-buy order","e":"Market order"}, ans:"b", exp:"A stop-loss triggers a sell when the price DROPS to the stop price. Limit-sell does the opposite (sell at or ABOVE)." },
+  { n:27, q:"An investor who short sold 120 shares at $150 per share wishes to realize a gross profit of $2400. At what price must the investor cover?", c:{"a":"120","b":"130","c":"140","d":"150"}, ans:"b", exp:"Profit = (Sell - Cover) x Shares. $2,400 = ($150 - Cover) x 120. Cover = $150 - $20 = $130." },
+  { n:28, q:"An investor sells 100 shares short at $40. What is the gain or loss if the stock price goes to $53?", c:{"a":"Loss, $1,300","b":"Gain, $1,300","c":"Loss, $1,200","d":"Gain, $1,200"}, ans:"a", exp:"Short seller sold at $40, must buy back at $53. Loss = ($53 - $40) x 100 = $1,300." },
+  { n:29, q:"An investor buys 100 shares of Walmart at $45 on margin (initial margin 70%, maintenance 25%). Stock goes to $56. What is the actual margin?", c:{"a":"65.9%","b":"75.9%","c":"79.9%","d":"80.9%"}, ans:"b", exp:"Loan = $4,500 x 0.30 = $1,350. At $56: equity = $5,600 - $1,350 = $4,250. Margin = $4,250 / $5,600 = 75.9%." },
+  { n:30, q:"Ms. Brown sold short 100 shares at $78. Price declined to $69. She would cover if stock moves up $1. She should place a?", c:{"a":"Sell stop order at $70","b":"Buy stop order at $70","c":"Sell limit order at $70","d":"Buy limit order at $70"}, ans:"b", exp:"She is short and wants to buy back (cover) if price rises to $70. A buy stop at $70 triggers a buy when price reaches $70." },
+  { n:31, q:"Joe Edwards purchased 150 shares of XYZ at $100. Stock is at $120. He wants a profit of at least $4050. What price per share for his order?", c:{"a":"27","b":"127","c":"100","d":"None of the mentioned options"}, ans:"b", exp:"Min revenue = $15,000 + $4,050 = $19,050. Min price = $19,050 / 150 = $127. Place a stop-loss at $127." },
+  { n:32, q:"An investor buys 100 shares of Walmart at $45 on margin (initial margin 70%, maintenance 25%). Below what price will a margin call occur?", c:{"a":"$13.50","b":"$54.00","c":"$42.00","d":"$18.00"}, ans:"d", exp:"Loan = $4,500 x 0.30 = $1,350. Margin call price = $1,350 / [100 x (1 - 0.25)] = $1,350 / 75 = $18.00." },
+  { n:33, q:"Limit orders instruct the broker to buy at the current market price. True or False?", c:{"a":"True","b":"False"}, ans:"b", exp:"FALSE. Limit orders specify a PARTICULAR price. Market orders buy at the current price." },
+  { n:34, q:"An investor decides to place 60% in equities and the rest in bonds. This is an example of asset allocation. True or False?", c:{"a":"True","b":"False"}, ans:"a", exp:"TRUE. Splitting funds across broad categories (stocks vs bonds) is exactly asset allocation." },
+  { n:35, q:"If stock ABC is at $50, a limit-buy order may instruct the broker to buy if the price falls below $45. True or False?", c:{"a":"True","b":"False"}, ans:"a", exp:"TRUE. A limit-buy at $45 means 'buy only at $45 or lower.' The broker waits for the price to drop." },
+  { n:36, q:"The efficient markets hypothesis suggests that active portfolio management strategies are the most appropriate. True or False?", c:{"a":"True","b":"False"}, ans:"b", exp:"FALSE. EMH says prices already reflect all information, so active management cannot consistently beat the market. EMH favors PASSIVE management." },
+  { n:37, q:"A market order is an order to buy or sell a stock on a specific exchange (market). True or False?", c:{"a":"True","b":"False"}, ans:"b", exp:"FALSE. 'Market' in market order means 'at the current market price,' NOT a specific exchange." },
+  { n:38, q:"If an investor is attempting to buy a volatile stock, it would be best to use a stop order. True or False?", c:{"a":"True","b":"False"}, ans:"a", exp:"TRUE. Stop orders help manage risk with volatile stocks by triggering trades at predetermined price levels." },
+  { n:39, q:"Which of the following statements regarding discount brokers is true?", c:{"a":"There are more online discount brokers than any other type","b":"Discount brokers only execute orders on stock","c":"Discount brokers offer little investment information and no advice","d":"All of the above statements are true"}, ans:"c", exp:"Discount brokers charge lower fees because they provide minimal research and no investment advice." },
+  { n:40, q:"The specialist is allowed to act as both a broker and dealer in order?", c:{"a":"To give commission brokers more competition","b":"To maintain a liquid and orderly market","c":"To give them more power","d":"To follow SEC regulations"}, ans:"b", exp:"Specialists have a dual role (broker + dealer) specifically to keep the market running smoothly and ensure liquidity." },
+  { n:41, q:"Which of the following statements regarding margin trading is true?", c:{"a":"Its major appeal is to institutional investors","b":"It maximizes returns and minimizes losses","c":"It magnifies both gains and losses","d":"It is considered a strictly speculative tool"}, ans:"c", exp:"Margin (leverage) amplifies BOTH gains AND losses. It does NOT minimize losses." },
+  { n:42, q:"Most securities are sold on a regular way basis, meaning settlement is one week after the trade date. True or False?", c:{"a":"True","b":"False"}, ans:"b", exp:"FALSE. Regular way settlement is T+3 (three business days), NOT one week." },
+  { n:43, q:"Under margin accounts, investors can purchase more stock without additional cash by leveraging eligible shares. True or False?", c:{"a":"True","b":"False"}, ans:"a", exp:"TRUE. If stocks rise, excess equity can be used as collateral to buy more without adding cash." },
+  { n:44, q:"A margin call occurs anytime equity falls below the initial margin. True or False?", c:{"a":"True","b":"False"}, ans:"b", exp:"FALSE. Margin calls happen at the MAINTENANCE margin (which is lower), not the initial margin." },
+  { n:45, q:"Most short sales are executed by the broker acting as the 'lender' of the security sold. True or False?", c:{"a":"True","b":"False"}, ans:"a", exp:"TRUE. The broker lends shares from their inventory or other clients' accounts for short selling." },
+];
+
+let answered = 0;
+let correct = 0;
+const userAnswers = {};
+
+function renderQuestions() {
+  const container = document.getElementById('questions-container');
+  questions.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = `q-${q.n}`;
+
+    let choicesHtml = '';
+    for (const [letter, text] of Object.entries(q.c)) {
+      choicesHtml += `<div class="choice-btn" id="choice-${q.n}-${letter}" onclick="selectAnswer(${q.n}, '${letter}')">
+        <span class="letter">${letter.toUpperCase()}</span>
+        <span>${text}</span>
+      </div>`;
+    }
+
+    card.innerHTML = `
+      <div class="q-number">Question ${q.n} of 45</div>
+      <div class="q-text">${q.q}</div>
+      <div class="choices">${choicesHtml}</div>
+      <div class="feedback" id="feedback-${q.n}"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function selectAnswer(qNum, letter) {
+  if (userAnswers[qNum] !== undefined) return;
+
+  const q = questions.find(x => x.n === qNum);
+  userAnswers[qNum] = letter;
+  answered++;
+
+  const isCorrect = letter === q.ans;
+  if (isCorrect) correct++;
+
+  // Disable all choices for this question
+  for (const l of Object.keys(q.c)) {
+    const btn = document.getElementById(`choice-${qNum}-${l}`);
+    btn.classList.add('disabled');
+    if (l === q.ans) btn.classList.add('show-correct');
+    if (l === letter && !isCorrect) btn.classList.add('selected-wrong');
+    if (l === letter && isCorrect) btn.classList.add('selected-correct');
+  }
+
+  // Show feedback
+  const fb = document.getElementById(`feedback-${qNum}`);
+  fb.style.display = 'block';
+  if (isCorrect) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = `<strong>&#10003; Correct!</strong>${q.exp}`;
+  } else {
+    fb.className = 'feedback wrong';
+    fb.innerHTML = `<strong>&#10007; Incorrect. The correct answer is ${q.ans.toUpperCase()}.</strong>${q.exp}`;
+  }
+
+  // Update card style
+  const card = document.getElementById(`q-${qNum}`);
+  card.classList.add('answered', isCorrect ? 'answered-correct' : 'answered-wrong');
+
+  // Update progress
+  updateProgress();
+
+  // Show submit button when all answered
+  if (answered === 45) {
+    document.getElementById('submit-btn').style.display = 'block';
+    document.getElementById('submit-btn').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+function updateProgress() {
+  const pct = (answered / 45) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = `${answered} of 45 answered (${correct} correct so far)`;
+}
+
+function showResults() {
+  const pct = Math.round((correct / 45) * 100);
+
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('score-pct').textContent = pct + '%';
+  document.getElementById('score-detail').textContent = `You got ${correct} out of 45 questions correct.`;
+
+  const circle = document.getElementById('score-circle');
+  const label = document.getElementById('score-label');
+
+  if (pct >= 90) { circle.className = 'score-circle excellent'; label.textContent = 'Excellent! You are ready for the exam!'; }
+  else if (pct >= 70) { circle.className = 'score-circle good'; label.textContent = 'Good job! Review the wrong answers below.'; }
+  else if (pct >= 50) { circle.className = 'score-circle needs-work'; label.textContent = 'Needs more study. Focus on the topics below.'; }
+  else { circle.className = 'score-circle poor'; label.textContent = 'Keep studying! Review all concepts and try again.'; }
+
+  // Show wrong answers
+  const wrongList = document.getElementById('wrong-list');
+  const wrongQs = questions.filter(q => userAnswers[q.n] !== q.ans);
+
+  if (wrongQs.length > 0) {
+    let html = `<h3>&#9888; Questions You Got Wrong (${wrongQs.length})</h3>`;
+    wrongQs.forEach(q => {
+      const yourLetter = userAnswers[q.n];
+      html += `<div class="wrong-item">
+        <div class="wi-q">Q${q.n}: ${q.q}</div>
+        <div class="wi-your">Your answer: ${yourLetter.toUpperCase()}. ${q.c[yourLetter]}</div>
+        <div class="wi-correct">Correct answer: ${q.ans.toUpperCase()}. ${q.c[q.ans]}</div>
+        <div class="wi-explain">${q.exp}</div>
+      </div>`;
+    });
+    wrongList.innerHTML = html;
+  } else {
+    wrongList.innerHTML = '<h3 style="color:#2E7D32">&#127942; Perfect Score! You got every question right!</h3>';
+  }
+
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+}
+
+function scrollToFirst() {
+  const wrongQs = questions.filter(q => userAnswers[q.n] !== q.ans);
+  if (wrongQs.length > 0) {
+    document.getElementById(`q-${wrongQs[0].n}`).scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+renderQuestions();
+</script>
+</body>
+</html>
