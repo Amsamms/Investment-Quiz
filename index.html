@@ -90,7 +90,7 @@
 <div class="container">
   <div class="header">
     <h1>Investment & Portfolio Management</h1>
-    <p>Midterm Exam Practice Quiz - 45 Questions</p>
+    <p id="header-subtitle">Midterm Exam Practice Quiz - 45 Questions</p>
   </div>
 
   <div class="progress-text" id="progress-text">0 of 45 answered</div>
@@ -101,12 +101,13 @@
   <button class="btn btn-primary" id="submit-btn" onclick="showResults()">See My Results</button>
 
   <div id="results">
-    <h2>Quiz Complete!</h2>
+    <h2 id="results-title">Quiz Complete!</h2>
     <div class="score-circle" id="score-circle"><span id="score-pct"></span><small>correct</small></div>
     <div class="score-label" id="score-label"></div>
     <div class="score-detail" id="score-detail"></div>
     <div id="wrong-list"></div>
-    <button class="btn btn-primary" onclick="location.reload()">Try Again</button>
+    <button class="btn btn-primary" id="retry-wrong-btn" onclick="startRetryRound()" style="display:none;margin-right:10px;">Retry Wrong Answers</button>
+    <button class="btn btn-primary" onclick="location.reload()">Start Over (Full Quiz)</button>
     <button class="btn btn-secondary" onclick="scrollToFirst()">Review Questions</button>
   </div>
 </div>
@@ -162,11 +163,18 @@ const questions = [
 
 let answered = 0;
 let correct = 0;
-const userAnswers = {};
+let userAnswers = {};
+let roundNumber = 1;
+let activeQuestions = questions;
+let totalInRound = questions.length;
 
-function renderQuestions() {
+function renderQuestions(subset) {
+  const list = subset || questions;
+  activeQuestions = list;
+  totalInRound = list.length;
   const container = document.getElementById('questions-container');
-  questions.forEach((q, idx) => {
+  container.innerHTML = '';
+  list.forEach((q, idx) => {
     const card = document.createElement('div');
     card.className = 'question-card';
     card.id = `q-${q.n}`;
@@ -179,14 +187,25 @@ function renderQuestions() {
       </div>`;
     }
 
+    const label = roundNumber === 1
+      ? `Question ${q.n} of 45`
+      : `Round ${roundNumber} · ${idx + 1} of ${list.length} (Original Q${q.n})`;
+
     card.innerHTML = `
-      <div class="q-number">Question ${q.n} of 45</div>
+      <div class="q-number">${label}</div>
       <div class="q-text">${q.q}</div>
       <div class="choices">${choicesHtml}</div>
       <div class="feedback" id="feedback-${q.n}"></div>
     `;
     container.appendChild(card);
   });
+
+  const subtitle = document.getElementById('header-subtitle');
+  if (subtitle) {
+    subtitle.textContent = roundNumber === 1
+      ? 'Midterm Exam Practice Quiz - 45 Questions'
+      : `Round ${roundNumber} — Retrying ${list.length} wrong answer${list.length === 1 ? '' : 's'}`;
+  }
 }
 
 function selectAnswer(qNum, letter) {
@@ -227,24 +246,32 @@ function selectAnswer(qNum, letter) {
   updateProgress();
 
   // Show submit button when all answered
-  if (answered === 45) {
+  if (answered === totalInRound) {
     document.getElementById('submit-btn').style.display = 'block';
     document.getElementById('submit-btn').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 }
 
 function updateProgress() {
-  const pct = (answered / 45) * 100;
+  const pct = (answered / totalInRound) * 100;
   document.getElementById('progress-bar').style.width = pct + '%';
-  document.getElementById('progress-text').textContent = `${answered} of 45 answered (${correct} correct so far)`;
+  document.getElementById('progress-text').textContent = `${answered} of ${totalInRound} answered (${correct} correct so far)`;
 }
 
 function showResults() {
-  const pct = Math.round((correct / 45) * 100);
+  const pct = Math.round((correct / totalInRound) * 100);
 
   document.getElementById('results').style.display = 'block';
   document.getElementById('score-pct').textContent = pct + '%';
-  document.getElementById('score-detail').textContent = `You got ${correct} out of 45 questions correct.`;
+
+  const title = document.getElementById('results-title');
+  if (roundNumber === 1) {
+    title.textContent = 'Quiz Complete!';
+    document.getElementById('score-detail').textContent = `You got ${correct} out of ${totalInRound} questions correct.`;
+  } else {
+    title.textContent = `Round ${roundNumber} Complete!`;
+    document.getElementById('score-detail').textContent = `Round ${roundNumber}: you got ${correct} out of ${totalInRound} retried questions correct.`;
+  }
 
   const circle = document.getElementById('score-circle');
   const label = document.getElementById('score-label');
@@ -254,9 +281,11 @@ function showResults() {
   else if (pct >= 50) { circle.className = 'score-circle needs-work'; label.textContent = 'Needs more study. Focus on the topics below.'; }
   else { circle.className = 'score-circle poor'; label.textContent = 'Keep studying! Review all concepts and try again.'; }
 
-  // Show wrong answers
+  // Show wrong answers (only from the current round)
   const wrongList = document.getElementById('wrong-list');
-  const wrongQs = questions.filter(q => userAnswers[q.n] !== q.ans);
+  const wrongQs = activeQuestions.filter(q => userAnswers[q.n] !== q.ans);
+
+  const retryBtn = document.getElementById('retry-wrong-btn');
 
   if (wrongQs.length > 0) {
     let html = `<h3>&#9888; Questions You Got Wrong (${wrongQs.length})</h3>`;
@@ -270,15 +299,41 @@ function showResults() {
       </div>`;
     });
     wrongList.innerHTML = html;
+    retryBtn.style.display = 'inline-block';
+    retryBtn.textContent = `Retry Wrong Answers (${wrongQs.length})`;
   } else {
-    wrongList.innerHTML = '<h3 style="color:#2E7D32">&#127942; Perfect Score! You got every question right!</h3>';
+    if (roundNumber === 1) {
+      wrongList.innerHTML = '<h3 style="color:#2E7D32">&#127942; Perfect Score! You got every question right!</h3>';
+    } else {
+      wrongList.innerHTML = '<h3 style="color:#2E7D32">&#127942; You mastered all wrong answers! Every retry question was correct.</h3>';
+    }
+    retryBtn.style.display = 'none';
   }
 
   document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
 }
 
+function startRetryRound() {
+  const wrongQs = activeQuestions.filter(q => userAnswers[q.n] !== q.ans);
+  if (wrongQs.length === 0) return;
+
+  roundNumber += 1;
+  answered = 0;
+  correct = 0;
+  userAnswers = {};
+
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('submit-btn').style.display = 'none';
+  document.getElementById('retry-wrong-btn').style.display = 'none';
+
+  renderQuestions(wrongQs);
+  updateProgress();
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function scrollToFirst() {
-  const wrongQs = questions.filter(q => userAnswers[q.n] !== q.ans);
+  const wrongQs = activeQuestions.filter(q => userAnswers[q.n] !== q.ans);
   if (wrongQs.length > 0) {
     document.getElementById(`q-${wrongQs[0].n}`).scrollIntoView({ behavior: 'smooth' });
   }
