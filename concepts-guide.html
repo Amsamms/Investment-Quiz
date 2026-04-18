@@ -228,8 +228,11 @@ h3.subhead {
   font-size: 17px;
   color: var(--ink);
 }
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+.table-wrap table.data { margin: 0; }
 table.data {
   width: 100%;
+  min-width: 420px;
   margin: 16px 0;
   border-collapse: collapse;
   background: var(--surface);
@@ -259,10 +262,21 @@ footer.page-foot {
   text-align: center;
 }
 footer.page-foot a { color: var(--accent); text-decoration: none; }
+.formula, .example, .callout, .explanation, .trap, .warning, .notice {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.formula, .math-block { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 @media (max-width: 600px) {
+  body { font-size: 15px; }
   main { padding: 20px 14px 60px; }
   header.page-head { padding: 18px 18px; }
   header.page-head h1 { font-size: 22px; }
+  h1.part { font-size: 18px; padding: 14px 16px; }
+  h2.cluster { font-size: 19px; }
+  h3.subhead { font-size: 15.5px; }
+  .formula, .math-block { font-size: 12.5px; }
+  table.data th, table.data td { font-size: 13px; padding: 8px 10px; }
   .question { padding: 16px 14px; }
   nav.topnav .inner { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
@@ -350,7 +364,7 @@ footer.page-foot a { color: var(--accent); text-decoration: none; }
 <h2 class="cluster">Cluster 6: Order Types</h2>
 <p>Covers Questions: 18, 19, 26, 30, 31, 33, 35, 37, 38</p>
 <h3 class="subhead">Order Type Summary</h3>
-<table class="data"><thead><tr><th>Order Type</th><th>What It Does</th><th>When to Use</th></tr></thead><tbody><tr><td>Market</td><td>Buy/sell immediately at best available price</td><td>When speed matters more than exact price</td></tr><tr><td>Limit-Buy</td><td>Buy only at set price or LOWER</td><td>Get a bargain -- wait for price to drop</td></tr><tr><td>Limit-Sell</td><td>Sell only at set price or HIGHER</td><td>Sell at a good price or not at all</td></tr><tr><td>Stop-Loss</td><td>If price DROPS to X, trigger a sell</td><td>Protect gains on stocks you OWN</td></tr><tr><td>Stop-Buy</td><td>If price RISES to X, trigger a buy</td><td>Limit losses on SHORT positions</td></tr></tbody></table>
+<div class="table-wrap"><table class="data"><thead><tr><th>Order Type</th><th>What It Does</th><th>When to Use</th></tr></thead><tbody><tr><td>Market</td><td>Buy/sell immediately at best available price</td><td>When speed matters more than exact price</td></tr><tr><td>Limit-Buy</td><td>Buy only at set price or LOWER</td><td>Get a bargain -- wait for price to drop</td></tr><tr><td>Limit-Sell</td><td>Sell only at set price or HIGHER</td><td>Sell at a good price or not at all</td></tr><tr><td>Stop-Loss</td><td>If price DROPS to X, trigger a sell</td><td>Protect gains on stocks you OWN</td></tr><tr><td>Stop-Buy</td><td>If price RISES to X, trigger a buy</td><td>Limit losses on SHORT positions</td></tr></tbody></table></div>
 <h3 class="subhead">Question-by-Question Analysis</h3>
 <p><strong>Q18 -- Protecting gains on a long position:</strong> You own JNJ stock at $50, now at $65. To protect gains, you need a STOP-LOSS order. The choices do not include stop-loss, so &#39;none of the above&#39; (e) is correct.</p>
 <p><strong>Q19 -- Minimizing losses on a short sale:</strong> You shorted JCP at $80. If price rises, you lose money. To limit losses, you need a STOP-BUY order (c) that triggers a buy if price rises to a set level. The quiz incorrectly marks limit-buy (b).</p>
@@ -441,7 +455,7 @@ Short 120 shares at $150, want $2,400 profit. Cover Price = $150 - ($2,400 / 120
 <div class="trap"><strong>⚠ EXAM TRAP!</strong><br>Settlement is T+3 (three business days), NOT one week. This is a common trick question.</div>
 <h3 class="subhead">Appendix: Question-to-Concept Cross-Reference</h3>
 <p>Use this table to quickly find which section explains any question:</p>
-<table class="data"><thead><tr><th>Q#</th><th>Concept Cluster</th><th>Section</th></tr></thead><tbody><tr><td>1</td><td>Real vs Financial Assets</td><td>1</td></tr><tr><td>2</td><td>Primary vs Secondary Markets</td><td>3</td></tr><tr><td>3</td><td>Types of Financial Assets</td><td>2</td></tr><tr><td>4</td><td>Types of Financial Assets</td><td>2</td></tr><tr><td>5</td><td>Real vs Financial Assets</td><td>1</td></tr><tr><td>6</td><td>Primary vs Secondary Markets</td><td>3</td></tr><tr><td>7</td><td>Primary vs Secondary Markets</td><td>3</td></tr><tr><td>8</td><td>Types of Financial Assets</td><td>2</td></tr><tr><td>9</td><td>The Players</td><td>4</td></tr><tr><td>10</td><td>The Players</td><td>4</td></tr><tr><td>11</td><td>The Players</td><td>4</td></tr><tr><td>12</td><td>Investment Process</td><td>5</td></tr><tr><td>13</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>14</td><td>Primary vs Secondary Markets</td><td>3</td></tr><tr><td>15</td><td>Real vs Financial Assets</td><td>1</td></tr><tr><td>16</td><td>Short Selling Calculations</td><td>8</td></tr><tr><td>17</td><td>Types of Financial Assets</td><td>2</td></tr><tr><td>18</td><td>Order Types</td><td>6</td></tr><tr><td>19</td><td>Order Types</td><td>6</td></tr><tr><td>20</td><td>Investment Process</td><td>5</td></tr><tr><td>21</td><td>The Players</td><td>5</td></tr><tr><td>22</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>23</td><td>Real vs Financial Assets</td><td>1</td></tr><tr><td>24</td><td>Settlement &amp; Costs</td><td>9</td></tr><tr><td>25</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>26</td><td>Order Types</td><td>6</td></tr><tr><td>27</td><td>Short Selling Calculations</td><td>8</td></tr><tr><td>28</td><td>Short Selling Calculations</td><td>8</td></tr><tr><td>29</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>30</td><td>Order Types</td><td>6</td></tr><tr><td>31</td><td>Order Types</td><td>6</td></tr><tr><td>32</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>33</td><td>Order Types</td><td>6</td></tr><tr><td>34</td><td>Investment Process</td><td>5</td></tr><tr><td>35</td><td>Order Types</td><td>6</td></tr><tr><td>36</td><td>Investment Process</td><td>5</td></tr><tr><td>37</td><td>Order Types</td><td>6</td></tr><tr><td>38</td><td>Order Types</td><td>6</td></tr><tr><td>39</td><td>The Players</td><td>4</td></tr><tr><td>40</td><td>The Players</td><td>4</td></tr><tr><td>41</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>42</td><td>Settlement &amp; Costs</td><td>9</td></tr><tr><td>43</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>44</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>45</td><td>Short Selling Calculations</td><td>8</td></tr></tbody></table>
+<div class="table-wrap"><table class="data"><thead><tr><th>Q#</th><th>Concept Cluster</th><th>Section</th></tr></thead><tbody><tr><td>1</td><td>Real vs Financial Assets</td><td>1</td></tr><tr><td>2</td><td>Primary vs Secondary Markets</td><td>3</td></tr><tr><td>3</td><td>Types of Financial Assets</td><td>2</td></tr><tr><td>4</td><td>Types of Financial Assets</td><td>2</td></tr><tr><td>5</td><td>Real vs Financial Assets</td><td>1</td></tr><tr><td>6</td><td>Primary vs Secondary Markets</td><td>3</td></tr><tr><td>7</td><td>Primary vs Secondary Markets</td><td>3</td></tr><tr><td>8</td><td>Types of Financial Assets</td><td>2</td></tr><tr><td>9</td><td>The Players</td><td>4</td></tr><tr><td>10</td><td>The Players</td><td>4</td></tr><tr><td>11</td><td>The Players</td><td>4</td></tr><tr><td>12</td><td>Investment Process</td><td>5</td></tr><tr><td>13</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>14</td><td>Primary vs Secondary Markets</td><td>3</td></tr><tr><td>15</td><td>Real vs Financial Assets</td><td>1</td></tr><tr><td>16</td><td>Short Selling Calculations</td><td>8</td></tr><tr><td>17</td><td>Types of Financial Assets</td><td>2</td></tr><tr><td>18</td><td>Order Types</td><td>6</td></tr><tr><td>19</td><td>Order Types</td><td>6</td></tr><tr><td>20</td><td>Investment Process</td><td>5</td></tr><tr><td>21</td><td>The Players</td><td>5</td></tr><tr><td>22</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>23</td><td>Real vs Financial Assets</td><td>1</td></tr><tr><td>24</td><td>Settlement &amp; Costs</td><td>9</td></tr><tr><td>25</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>26</td><td>Order Types</td><td>6</td></tr><tr><td>27</td><td>Short Selling Calculations</td><td>8</td></tr><tr><td>28</td><td>Short Selling Calculations</td><td>8</td></tr><tr><td>29</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>30</td><td>Order Types</td><td>6</td></tr><tr><td>31</td><td>Order Types</td><td>6</td></tr><tr><td>32</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>33</td><td>Order Types</td><td>6</td></tr><tr><td>34</td><td>Investment Process</td><td>5</td></tr><tr><td>35</td><td>Order Types</td><td>6</td></tr><tr><td>36</td><td>Investment Process</td><td>5</td></tr><tr><td>37</td><td>Order Types</td><td>6</td></tr><tr><td>38</td><td>Order Types</td><td>6</td></tr><tr><td>39</td><td>The Players</td><td>4</td></tr><tr><td>40</td><td>The Players</td><td>4</td></tr><tr><td>41</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>42</td><td>Settlement &amp; Costs</td><td>9</td></tr><tr><td>43</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>44</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>45</td><td>Short Selling Calculations</td><td>8</td></tr></tbody></table></div>
 <h3 class="subhead">You are now ready to ace the exam!</h3>
 <footer class="page-foot">
   <p>EMBA Investment &amp; Portfolio Management · Midterm Prep ·
