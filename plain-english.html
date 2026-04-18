@@ -228,8 +228,11 @@ h3.subhead {
   font-size: 17px;
   color: var(--ink);
 }
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+.table-wrap table.data { margin: 0; }
 table.data {
   width: 100%;
+  min-width: 420px;
   margin: 16px 0;
   border-collapse: collapse;
   background: var(--surface);
@@ -259,10 +262,21 @@ footer.page-foot {
   text-align: center;
 }
 footer.page-foot a { color: var(--accent); text-decoration: none; }
+.formula, .example, .callout, .explanation, .trap, .warning, .notice {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.formula, .math-block { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 @media (max-width: 600px) {
+  body { font-size: 15px; }
   main { padding: 20px 14px 60px; }
   header.page-head { padding: 18px 18px; }
   header.page-head h1 { font-size: 22px; }
+  h1.part { font-size: 18px; padding: 14px 16px; }
+  h2.cluster { font-size: 19px; }
+  h3.subhead { font-size: 15.5px; }
+  .formula, .math-block { font-size: 12.5px; }
+  table.data th, table.data td { font-size: 13px; padding: 8px 10px; }
   .question { padding: 16px 14px; }
   nav.topnav .inner { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
