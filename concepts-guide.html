@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Concepts Guide · EMBA Investment Midterm</title>
+<style>
+:root {
+  --bg: #f7f5f0;
+  --surface: #ffffff;
+  --ink: #1a1d23;
+  --muted: #5a6270;
+  --accent: #2d6cdf;
+  --accent-soft: #e7f0ff;
+  --green: #0f7a4f;
+  --green-soft: #e6f4ec;
+  --red: #b3261e;
+  --red-soft: #fdecea;
+  --amber: #a25f00;
+  --amber-soft: #fff4e0;
+  --border: #e5e1d6;
+  --code-bg: #f1efe8;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 6px 20px rgba(0,0,0,0.04);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.65;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+nav.topnav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: saturate(1.2) blur(6px);
+}
+nav.topnav .inner {
+  max-width: 960px; margin: 0 auto;
+  padding: 10px 20px;
+  display: flex; flex-wrap: wrap; gap: 6px 14px;
+  align-items: center; justify-content: space-between;
+}
+nav.topnav .brand {
+  font-weight: 700; font-size: 15px; letter-spacing: -0.01em;
+  color: var(--ink);
+}
+nav.topnav .brand small { color: var(--muted); font-weight: 500; }
+nav.topnav .links { display: flex; gap: 6px; flex-wrap: wrap; }
+nav.topnav a {
+  text-decoration: none;
+  color: var(--muted);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px; font-weight: 600;
+  transition: all .15s;
+}
+nav.topnav a:hover { color: var(--ink); background: var(--code-bg); }
+nav.topnav a.active {
+  color: #fff; background: var(--accent);
+}
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 30px 22px 80px;
+}
+header.page-head {
+  margin: 10px 0 28px;
+  padding: 24px 26px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fff, #faf7ee);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+header.page-head h1 {
+  margin: 0 0 6px;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+}
+header.page-head p { margin: 0; color: var(--muted); }
+.notice {
+  margin: 20px 0;
+  padding: 16px 18px;
+  border-radius: 10px;
+  background: var(--amber-soft);
+  border-left: 4px solid var(--amber);
+  color: #5a3a00;
+}
+.notice strong { color: var(--amber); }
+.notice p { margin: 6px 0; }
+.notice p:first-child { margin-top: 0; }
+.notice p:last-child { margin-bottom: 0; }
+.question {
+  margin: 28px 0;
+  padding: 20px 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.question h3 {
+  margin: 0 0 8px;
+  font-size: 17px;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+}
+.question .stem { margin: 0 0 12px; font-weight: 500; }
+.choices { list-style: none; padding: 0; margin: 0 0 12px; }
+.choices li {
+  padding: 8px 12px;
+  margin: 4px 0;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  color: #333;
+}
+.choices li.correct {
+  background: var(--green-soft);
+  border-color: #bfe0cd;
+  color: var(--green);
+  font-weight: 600;
+}
+.choices li.correct::after {
+  content: "  ✓ CORRECT";
+  color: var(--green);
+  font-weight: 700;
+  margin-left: 8px;
+  font-size: 13px;
+}
+.explanation {
+  margin: 12px 0 0;
+  padding: 14px 16px;
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+}
+.explanation strong { color: var(--accent); }
+.explanation .math-block {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: var(--code-bg);
+  border-radius: 6px;
+  font-family: "SF Mono", Consolas, Monaco, monospace;
+  font-size: 13.5px;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.warning {
+  margin: 12px 0 0;
+  padding: 14px 16px;
+  background: var(--red-soft);
+  border-left: 4px solid var(--red);
+  border-radius: 8px;
+  color: #651612;
+}
+.warning strong { color: var(--red); }
+.trap {
+  margin: 22px 0;
+  padding: 16px 18px;
+  background: var(--red-soft);
+  border-left: 4px solid var(--red);
+  border-radius: 8px;
+}
+.trap strong { color: var(--red); font-weight: 700; }
+.formula {
+  margin: 16px 0;
+  padding: 14px 16px;
+  background: var(--green-soft);
+  border-left: 4px solid var(--green);
+  border-radius: 8px;
+  font-family: "SF Mono", Consolas, Monaco, monospace;
+  font-size: 14px;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.formula strong { color: var(--green); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: block; margin-bottom: 6px; font-size: 14px; letter-spacing: 0.02em; }
+.example {
+  margin: 16px 0;
+  padding: 14px 16px;
+  background: #fbf8f0;
+  border-left: 4px solid #c7a85a;
+  border-radius: 8px;
+}
+.example strong { color: #8a6a1e; }
+h1.part {
+  margin: 50px 0 4px;
+  padding: 18px 22px;
+  background: linear-gradient(135deg, #1F4E79, #2d6cdf);
+  color: #fff;
+  border-radius: 12px;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  box-shadow: var(--shadow);
+}
+h1.part:first-of-type { margin-top: 20px; }
+p.part-intro {
+  margin: -4px 0 20px;
+  padding: 0 4px;
+  color: var(--muted);
+  font-style: italic;
+  font-size: 15px;
+}
+h2.cluster {
+  margin: 42px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+.callout {
+  margin: 16px 0;
+  padding: 14px 16px;
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+}
+.callout strong { color: var(--accent); display: block; margin-bottom: 6px; letter-spacing: 0.02em; }
+ul.plain-list {
+  margin: 10px 0 10px 4px;
+  padding-left: 22px;
+}
+ul.plain-list li { margin: 4px 0; }
+h3.subhead {
+  margin: 24px 0 8px;
+  font-size: 17px;
+  color: var(--ink);
+}
+table.data {
+  width: 100%;
+  margin: 16px 0;
+  border-collapse: collapse;
+  background: var(--surface);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+table.data th, table.data td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 14.5px;
+}
+table.data thead th {
+  background: var(--code-bg);
+  font-weight: 700;
+}
+table.data tbody tr:last-child td { border-bottom: none; }
+p { margin: 10px 0; }
+strong { font-weight: 700; }
+footer.page-foot {
+  margin: 60px 0 0;
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 13.5px;
+  text-align: center;
+}
+footer.page-foot a { color: var(--accent); text-decoration: none; }
+@media (max-width: 600px) {
+  main { padding: 20px 14px 60px; }
+  header.page-head { padding: 18px 18px; }
+  header.page-head h1 { font-size: 22px; }
+  .question { padding: 16px 14px; }
+  nav.topnav .inner { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="inner">
+    <div class="brand">EMBA Investment Midterm <small>· Study Hub</small></div>
+    <div class="links">
+    <a href="https://amsamms.github.io/Investment-Quiz/">Practice Quiz</a>
+    <a href="plain-english.html">Plain English Summary</a>
+    <a href="concepts-guide.html" class="active">Concepts Guide</a>
+    </div>
+  </div>
+</nav>
+<main>
+<header class="page-head">
+  <h1>Exam Concepts Guide</h1>
+  <p>Nine concept clusters organized by topic. Formulas explained intuitively, worked examples, and exam-trap callouts.</p>
+</header>
+<h2 class="cluster">Cluster 1: Real Assets vs. Financial Assets</h2>
+<p>Covers Questions: 1, 5, 15, 23</p>
+<h3 class="subhead">The Core Idea</h3>
+<p>Everything of value falls into two buckets:</p>
+<p><strong>Real assets</strong> are physical things that produce goods/services: land, buildings, machines, equipment, consumer durables (cars, fridges). They GENERATE wealth for the economy.</p>
+<p><strong>Financial assets</strong> are paper claims: stocks, bonds, commercial paper, derivatives. They ALLOCATE wealth -- they decide who gets what share of the income real assets produce.</p>
+<h3 class="subhead">How to Identify Which Is Which</h3>
+<p>Ask yourself: &#39;Can I use this to produce something or is it just a piece of paper claiming ownership?&#39; If it produces = real. If it claims = financial.</p>
+<p><strong>Real:</strong> Land, buildings, production equipment, consumer durables, patents, software (as a product)</p>
+<p><strong>Financial:</strong> Common stock, bonds, commercial paper, options, futures</p>
+<h3 class="subhead">The Exchange Question (Q23)</h3>
+<p>When Surf City Software trades its software (a product it created = real asset) for Microsoft stock (a financial asset), it exchanged a REAL asset for a FINANCIAL asset. The software is real because it was created/produced. The stock is financial because it is just a claim on Microsoft&#39;s real assets.</p>
+<div class="trap"><strong>⚠ EXAM TRAP!</strong><br>Common stock is a FINANCIAL asset, not a real asset -- even though it represents ownership of a company that owns real assets. The stock itself is just a certificate. Production equipment IS a real asset.</div>
+<h2 class="cluster">Cluster 2: Types of Financial Assets</h2>
+<p>Covers Questions: 3, 4, 8, 17</p>
+<h3 class="subhead">Three Categories of Financial Assets</h3>
+<p><strong>I. Debt Securities (Fixed Income):</strong> Bonds, T-bills, CDs, commercial paper, banker&#39;s acceptances. You lend money and get interest.</p>
+<p><strong>II. Equity Securities:</strong> Common stock, preferred stock. You own part of a company.</p>
+<p><strong>III. Derivative Securities:</strong> Options, futures. Contracts whose value depends on another asset.</p>
+<p>All three categories (I, II, III) are financial assets. (Q8)</p>
+<h3 class="subhead">What Is NOT a Derivative? (Q3)</h3>
+<p>A share of common stock is NOT a derivative. It is direct ownership. Call options and futures ARE derivatives because their value is derived from the stock price.</p>
+<h3 class="subhead">What Is NOT a Money Market Security? (Q4)</h3>
+<p>Money market = short-term debt instruments (maturity under 1 year). T-bills, 6-month CDs, banker&#39;s acceptances qualify. Common stock has no maturity date and is equity, not debt -- so it is NOT a money market security.</p>
+<h3 class="subhead">Common Stock = Ownership (Q17)</h3>
+<p>A common stock represents an ownership share in a corporation. Not a call option (that is a contract), not a fixed-income security (that is debt), not preferred stock (different class of ownership).</p>
+<div class="trap"><strong>⚠ EXAM TRAP!</strong><br>Do not confuse money market securities with equity. Money market = SHORT-TERM DEBT ONLY. Stocks are equity, not debt, and have no maturity date.</div>
+<h2 class="cluster">Cluster 3: Primary vs. Secondary Markets</h2>
+<p>Covers Questions: 2, 6, 7, 14</p>
+<h3 class="subhead">Primary Market</h3>
+<p>Where NEW securities are sold for the first time. The company gets the money. Investment bankers help facilitate this process (underwriting, distribution).</p>
+<p>Raising capital by issuing stock = primary market (Q7)</p>
+<p>Purchasing a new issue = primary market + usually with investment banker assistance (Q6)</p>
+<h3 class="subhead">Secondary Market</h3>
+<p>Where PREVIOUSLY ISSUED securities are traded between investors. The company gets nothing from these trades. This includes transactions on stock exchanges (NYSE) AND in the OTC market (NASDAQ). (Q14: answer includes both venues)</p>
+<p>Trading of previously issued stock = secondary market (Q2)</p>
+<div class="trap"><strong>⚠ EXAM TRAP!</strong><br>Q6: The quiz highlights just &#39;primary market&#39; (b), but the most complete answer is (e) &#39;primary market AND usually with the assistance of an investment banker.&#39; Investment bankers are involved in new issues. If the exam offers both options, pick the most complete one.</div>
+<h2 class="cluster">Cluster 4: The Players</h2>
+<p>Covers Questions: 9, 10, 11, 39, 40</p>
+<h3 class="subhead">Investment Bankers (Q10)</h3>
+<p>They are NOT banks. They do NOT take deposits or make loans. They do two things:</p>
+<p>1. Act as intermediaries between companies issuing new securities and investors</p>
+<p>2. Advise companies on financial needs and find buyers</p>
+<p>Answer (d) combines both roles. Answer (c) describes commercial banks, not investment bankers.</p>
+<h3 class="subhead">Specialists / Designated Market Makers (Q9, Q40)</h3>
+<p>What they do: maintain limit order books, earn from commissions and spreads, stand ready to trade at bid/ask prices, and CAN trade in their own accounts.</p>
+<p>Why they exist: to maintain a LIQUID and ORDERLY market (Q40). Not for competition, power, or SEC compliance.</p>
+<p>Key: statements a, b, c are all true. Statement d (&#39;cannot trade in own accounts&#39;) is FALSE. So the answer is &#39;all true EXCEPT d.&#39;</p>
+<h3 class="subhead">Financial Intermediaries (Q11, Q21)</h3>
+<p>Commercial banks, insurance companies, AND investment companies are ALL financial intermediaries (Q11).</p>
+<p>They exist because small investors cannot efficiently: diversify + gather information + monitor portfolios. ALL three reasons are valid (Q21).</p>
+<h3 class="subhead">Discount Brokers (Q39)</h3>
+<p>They offer little investment information and no advice (Q39: answer c). They just execute trades cheaply.</p>
+<div class="trap"><strong>⚠ EXAM TRAP!</strong><br>Investment bankers DO NOT accept deposits -- that is commercial banks. Specialists CAN trade in their own accounts. Do not confuse these roles.</div>
+<h2 class="cluster">Cluster 5: Investment Process</h2>
+<p>Covers Questions: 12, 20, 21, 34, 36</p>
+<h3 class="subhead">Asset Allocation vs. Security Selection</h3>
+<p><strong>Asset Allocation (Q34):</strong> Deciding the broad split: 60% stocks, 30% bonds, 10% cash. This is TRUE when an investor decides to split funds between equities and bonds.</p>
+<p><strong>Security Selection (Q12):</strong> Choosing SPECIFIC securities within each class. Not the broad split -- the specific picks.</p>
+<h3 class="subhead">Active vs. Passive Management</h3>
+<p><strong>Passive (Q20):</strong> Hold diversified portfolios without spending effort on analysis. Just track the market index.</p>
+<p><strong>Active:</strong> Spend resources researching, analyzing, and trying to beat the market.</p>
+<p>The Efficient Markets Hypothesis (EMH) says active management is NOT the most appropriate strategy (Q36: FALSE). EMH favors passive management because prices already reflect all information.</p>
+<h2 class="cluster">Cluster 6: Order Types</h2>
+<p>Covers Questions: 18, 19, 26, 30, 31, 33, 35, 37, 38</p>
+<h3 class="subhead">Order Type Summary</h3>
+<table class="data"><thead><tr><th>Order Type</th><th>What It Does</th><th>When to Use</th></tr></thead><tbody><tr><td>Market</td><td>Buy/sell immediately at best available price</td><td>When speed matters more than exact price</td></tr><tr><td>Limit-Buy</td><td>Buy only at set price or LOWER</td><td>Get a bargain -- wait for price to drop</td></tr><tr><td>Limit-Sell</td><td>Sell only at set price or HIGHER</td><td>Sell at a good price or not at all</td></tr><tr><td>Stop-Loss</td><td>If price DROPS to X, trigger a sell</td><td>Protect gains on stocks you OWN</td></tr><tr><td>Stop-Buy</td><td>If price RISES to X, trigger a buy</td><td>Limit losses on SHORT positions</td></tr></tbody></table>
+<h3 class="subhead">Question-by-Question Analysis</h3>
+<p><strong>Q18 -- Protecting gains on a long position:</strong> You own JNJ stock at $50, now at $65. To protect gains, you need a STOP-LOSS order. The choices do not include stop-loss, so &#39;none of the above&#39; (e) is correct.</p>
+<p><strong>Q19 -- Minimizing losses on a short sale:</strong> You shorted JCP at $80. If price rises, you lose money. To limit losses, you need a STOP-BUY order (c) that triggers a buy if price rises to a set level. The quiz incorrectly marks limit-buy (b).</p>
+<p><strong>Q26 -- Sell at or below specified price:</strong> Stop-loss (b). A stop-loss triggers a sell when the price drops to the stop price. Limit-sell does the opposite (sell at or ABOVE).</p>
+<p><strong>Q30 -- Ms. Brown&#39;s short position:</strong> Stock at $69, she wants to cover if it rises $1 to $70. She needs a buy stop order at $70 (b) -- it triggers a buy if price reaches $70.</p>
+<p><strong>Q31 -- Locking in profit:</strong> Joe bought 150 shares at $100. Wants $4,050 minimum profit. Minimum sell price = ($15,000 + $4,050) / 150 = $127. Place a stop-loss at $127 (b).</p>
+<p><strong>Q33 -- Limit orders buy at current price?</strong> FALSE (b). Limit orders specify a particular price. Market orders buy at the current price.</p>
+<p><strong>Q35 -- Limit-buy at $45 when stock is $50?</strong> TRUE (a). A limit-buy at $45 means &#39;buy only at $45 or lower.&#39; The broker waits until the price drops.</p>
+<p><strong>Q37 -- Market order = specific exchange?</strong> FALSE (b). &#39;Market&#39; in &#39;market order&#39; means &#39;at the current market price,&#39; not a specific exchange.</p>
+<p><strong>Q38 -- Stop order for volatile stock?</strong> TRUE (a). A stop order gives control over entry/exit price for unpredictable stocks.</p>
+<div class="trap"><strong>⚠ EXAM TRAP!</strong><br>Q19 ERROR: The quiz says limit-buy, but the correct answer is stop-buy. A limit-buy executes at or BELOW the limit price -- it cannot protect against a RISING price. Only a stop-buy triggers when the price reaches a level from below.</div>
+<h2 class="cluster">Cluster 7: Margin Trading Calculations</h2>
+<p>Covers Questions: 13, 22, 25, 29, 32, 41, 43, 44</p>
+<h3 class="subhead">Understanding Margin -- The Intuition</h3>
+<p>Buying on margin is like buying a house with a mortgage. You put up some of your own money (equity/margin), and the broker lends you the rest (loan). The key insight: the LOAN stays fixed, but your EQUITY changes as the stock price moves.</p>
+<h3 class="subhead">Formula 1: How Much Did You Borrow?</h3>
+<p>Intuition: If you put up X% of the cost, you borrowed (100% - X%).</p>
+<div class="formula"><strong>AMOUNT BORROWED</strong>Total Cost = Shares x Price Per Share Your Money = Total Cost x Initial Margin % Loan (Borrowed) = Total Cost - Your Money = Total Cost x (1 - Initial Margin %)</div>
+<div class="example"><strong>Example (Q22)</strong>
+200 shares at $70, initial margin 55%. Total cost = 200 x $70 = $14,000 Your money = $14,000 x 0.55 = $7,700 Borrowed = $14,000 - $7,700 = $6,300<br></div>
+<h3 class="subhead">Formula 2: What Is My Actual Margin Now?</h3>
+<p>Intuition: Your margin is the percentage of the current stock value that belongs to YOU (not the broker). As price goes up, your margin increases. As price goes down, your margin decreases. The loan never changes.</p>
+<div class="formula"><strong>ACTUAL MARGIN</strong>Current Stock Value = Shares x Current Price Your Equity = Current Stock Value - Loan Actual Margin = Your Equity / Current Stock Value</div>
+<div class="example"><strong>Example (Q29)</strong>
+100 shares bought at $45, initial margin 70%. Price now $56. Loan = 100 x $45 x (1 - 0.70) = $1,350 Current value = 100 x $56 = $5,600 Equity = $5,600 - $1,350 = $4,250 Actual margin = $4,250 / $5,600 = 75.9%<br></div>
+<h3 class="subhead">Formula 3: At What Price Do I Get a Margin Call?</h3>
+<p>Intuition: A margin call happens when your equity drops to the maintenance margin percentage. You are asking: &#39;at what price does my ownership shrink to the bare minimum the broker allows?&#39;</p>
+<p>Start from: Actual Margin = Maintenance Margin</p>
+<p>(Shares x Price - Loan) / (Shares x Price) = Maintenance Margin</p>
+<p>Solve for Price: multiply both sides by (Shares x Price):</p>
+<p>Shares x Price - Loan = Maintenance Margin x Shares x Price</p>
+<p>Shares x Price x (1 - Maintenance Margin) = Loan</p>
+<p>Price = Loan / [Shares x (1 - Maintenance Margin)]</p>
+<div class="formula"><strong>MARGIN CALL PRICE</strong>Price = Loan / [Shares x (1 - Maintenance Margin)] This makes intuitive sense: - Bigger loan = higher margin call price (more debt = more risk) - More shares = lower margin call price (spreading risk) - Higher maintenance margin = higher margin call price (stricter rules)</div>
+<div class="example"><strong>Example (Q13)</strong>
+100 shares at $70, IM=50%, MM=30%. Loan = 100 x $70 x 0.50 = $3,500 Margin call price = $3,500 / [100 x (1 - 0.30)] = $3,500 / 70 = $50<br></div>
+<div class="example"><strong>Example (Q32)</strong>
+100 shares at $45, IM=70%, MM=25%. Loan = 100 x $45 x 0.30 = $1,350 Margin call price = $1,350 / [100 x (1 - 0.25)] = $1,350 / 75 = $18<br></div>
+<h3 class="subhead">Formula 4: Rate of Return on Margin Purchase</h3>
+<p>Intuition: Your return is based only on YOUR money, not the total investment. It is simply: how much did your equity change?</p>
+<div class="formula"><strong>RATE OF RETURN</strong>Initial Equity = Shares x Purchase Price x Initial Margin % Ending Equity = (Shares x Selling Price) - Loan Rate of Return = (Ending Equity - Initial Equity) / Initial Equity</div>
+<div class="example"><strong>Example (Q25)</strong>
+300 shares at $60, IM=60%, sell at $45. Initial equity = 300 x $60 x 0.60 = $10,800 Loan = $18,000 - $10,800 = $7,200 Ending equity = (300 x $45) - $7,200 = $13,500 - $7,200 = $6,300 Return = ($6,300 - $10,800) / $10,800 = -41.67% Stock fell 25% but YOUR loss is 41.67% -- leverage amplified it!<br></div>
+<h3 class="subhead">True/False Concepts</h3>
+<p><strong>Q41: Margin magnifies both gains AND losses (c).</strong> TRUE. It does NOT minimize losses. It amplifies everything.</p>
+<p><strong>Q43: Can buy more stock without cash by leveraging existing shares.</strong> TRUE. If your stocks rise, your excess equity can be used as collateral.</p>
+<p><strong>Q44: Margin call at initial margin?</strong> FALSE. Margin calls happen at the MAINTENANCE margin, which is LOWER.</p>
+<div class="trap"><strong>⚠ EXAM TRAP!</strong><br>Margin call is at MAINTENANCE margin, NOT initial margin. The initial margin is only required when you FIRST buy. After that, the maintenance margin is the floor. Also: margin does NOT &#39;minimize losses&#39; -- it AMPLIFIES them.</div>
+<h2 class="cluster">Cluster 8: Short Selling Calculations</h2>
+<p>Covers Questions: 16, 27, 28, 45</p>
+<h3 class="subhead">Understanding Short Selling</h3>
+<p>Normal buying (going &#39;long&#39;): you buy first, then sell later. You profit when the price goes UP.</p>
+<p>Short selling: you SELL first (borrowed shares), then BUY later. You profit when the price goes DOWN.</p>
+<h3 class="subhead">Initial Investment in Short Sale</h3>
+<p>Intuition: When you short sell, the broker needs a deposit from you as insurance in case the stock goes up. Your deposit = the value of shares sold x your initial margin percentage.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><h3 class="subhead">INITIAL INVESTMENT (SHORT)</h3>
+<p>Sale Proceeds = Shares x Price Per Share Your Deposit = Sale Proceeds x Initial Margin % This deposit is YOUR initial investment</p></td>
+</tr>
+</tbody>
+</table>
+<div class="example"><strong>Example (Q16)</strong>
+Short 200 shares at $60, initial margin 60%. Sale proceeds = 200 x $60 = $12,000 Your deposit = 60% x $12,000 = $7,200<br></div>
+<h3 class="subhead">Profit/Loss on Short Sale</h3>
+<p>Intuition: You sold at a high price and want to buy back at a low price. Profit = what you sold for - what you bought back for.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><h3 class="subhead">SHORT SALE PROFIT/LOSS</h3>
+<p>Profit = (Sell Price - Buy-Back Price) x Shares If buy-back &lt; sell: PROFIT (price went down as you hoped) If buy-back &gt; sell: LOSS (price went up against you)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="example"><strong>Example (Q28)</strong>
+Short 100 shares at $40. Price goes to $53. Close position. Result = ($40 - $53) x 100 = -$13 x 100 = -$1,300 This is a LOSS because you sold at $40 but had to buy back at $53.<br></div>
+<h3 class="subhead">Finding the Cover Price for a Target Profit</h3>
+<p>Intuition: You know how much profit you want. Work backwards to find the buy-back price.</p>
+<div class="formula"><strong>COVER PRICE FOR TARGET PROFIT</strong>Target Profit = (Sell Price - Cover Price) x Shares Cover Price = Sell Price - (Target Profit / Shares)</div>
+<div class="example"><strong>Example (Q27)</strong>
+Short 120 shares at $150, want $2,400 profit. Cover Price = $150 - ($2,400 / 120) = $150 - $20 = $130 You must buy back at $130 or lower to make at least $2,400.<br></div>
+<p><strong>Q45: Broker acts as lender?</strong> TRUE. The broker lends you the shares (from their inventory or other clients&#39; accounts) to sell short.</p>
+<h2 class="cluster">Cluster 9: Settlement and Trading Costs</h2>
+<p>Covers Questions: 24, 42</p>
+<p><strong>Q24 -- Trading Costs:</strong> Buying and selling stocks costs THREE things: (1) broker commissions, (2) dealer bid-ask spread, AND (3) possible price concession. Answer: (e) all three.</p>
+<p><strong>Q42 -- Settlement Period:</strong> Regular way settlement is T+3 (three business days), NOT one week. FALSE.</p>
+<div class="trap"><strong>⚠ EXAM TRAP!</strong><br>Settlement is T+3 (three business days), NOT one week. This is a common trick question.</div>
+<h3 class="subhead">Appendix: Question-to-Concept Cross-Reference</h3>
+<p>Use this table to quickly find which section explains any question:</p>
+<table class="data"><thead><tr><th>Q#</th><th>Concept Cluster</th><th>Section</th></tr></thead><tbody><tr><td>1</td><td>Real vs Financial Assets</td><td>1</td></tr><tr><td>2</td><td>Primary vs Secondary Markets</td><td>3</td></tr><tr><td>3</td><td>Types of Financial Assets</td><td>2</td></tr><tr><td>4</td><td>Types of Financial Assets</td><td>2</td></tr><tr><td>5</td><td>Real vs Financial Assets</td><td>1</td></tr><tr><td>6</td><td>Primary vs Secondary Markets</td><td>3</td></tr><tr><td>7</td><td>Primary vs Secondary Markets</td><td>3</td></tr><tr><td>8</td><td>Types of Financial Assets</td><td>2</td></tr><tr><td>9</td><td>The Players</td><td>4</td></tr><tr><td>10</td><td>The Players</td><td>4</td></tr><tr><td>11</td><td>The Players</td><td>4</td></tr><tr><td>12</td><td>Investment Process</td><td>5</td></tr><tr><td>13</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>14</td><td>Primary vs Secondary Markets</td><td>3</td></tr><tr><td>15</td><td>Real vs Financial Assets</td><td>1</td></tr><tr><td>16</td><td>Short Selling Calculations</td><td>8</td></tr><tr><td>17</td><td>Types of Financial Assets</td><td>2</td></tr><tr><td>18</td><td>Order Types</td><td>6</td></tr><tr><td>19</td><td>Order Types</td><td>6</td></tr><tr><td>20</td><td>Investment Process</td><td>5</td></tr><tr><td>21</td><td>The Players</td><td>5</td></tr><tr><td>22</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>23</td><td>Real vs Financial Assets</td><td>1</td></tr><tr><td>24</td><td>Settlement &amp; Costs</td><td>9</td></tr><tr><td>25</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>26</td><td>Order Types</td><td>6</td></tr><tr><td>27</td><td>Short Selling Calculations</td><td>8</td></tr><tr><td>28</td><td>Short Selling Calculations</td><td>8</td></tr><tr><td>29</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>30</td><td>Order Types</td><td>6</td></tr><tr><td>31</td><td>Order Types</td><td>6</td></tr><tr><td>32</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>33</td><td>Order Types</td><td>6</td></tr><tr><td>34</td><td>Investment Process</td><td>5</td></tr><tr><td>35</td><td>Order Types</td><td>6</td></tr><tr><td>36</td><td>Investment Process</td><td>5</td></tr><tr><td>37</td><td>Order Types</td><td>6</td></tr><tr><td>38</td><td>Order Types</td><td>6</td></tr><tr><td>39</td><td>The Players</td><td>4</td></tr><tr><td>40</td><td>The Players</td><td>4</td></tr><tr><td>41</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>42</td><td>Settlement &amp; Costs</td><td>9</td></tr><tr><td>43</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>44</td><td>Margin Trading Calculations</td><td>7</td></tr><tr><td>45</td><td>Short Selling Calculations</td><td>8</td></tr></tbody></table>
+<h3 class="subhead">You are now ready to ace the exam!</h3>
+<footer class="page-foot">
+  <p>EMBA Investment &amp; Portfolio Management · Midterm Prep ·
+  <a href="index.html">Quiz</a> ·
+  <a href="answer-key.html">Answer Key</a> ·
+  <a href="concepts-guide.html">Concepts Guide</a></p>
+</footer>
+</main>
+</body>
+</html>
