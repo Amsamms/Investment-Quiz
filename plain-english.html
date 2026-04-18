@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plain English Summary · EMBA Investment Midterm</title>
+<style>
+:root {
+  --bg: #f7f5f0;
+  --surface: #ffffff;
+  --ink: #1a1d23;
+  --muted: #5a6270;
+  --accent: #2d6cdf;
+  --accent-soft: #e7f0ff;
+  --green: #0f7a4f;
+  --green-soft: #e6f4ec;
+  --red: #b3261e;
+  --red-soft: #fdecea;
+  --amber: #a25f00;
+  --amber-soft: #fff4e0;
+  --border: #e5e1d6;
+  --code-bg: #f1efe8;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 6px 20px rgba(0,0,0,0.04);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.65;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+nav.topnav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: saturate(1.2) blur(6px);
+}
+nav.topnav .inner {
+  max-width: 960px; margin: 0 auto;
+  padding: 10px 20px;
+  display: flex; flex-wrap: wrap; gap: 6px 14px;
+  align-items: center; justify-content: space-between;
+}
+nav.topnav .brand {
+  font-weight: 700; font-size: 15px; letter-spacing: -0.01em;
+  color: var(--ink);
+}
+nav.topnav .brand small { color: var(--muted); font-weight: 500; }
+nav.topnav .links { display: flex; gap: 6px; flex-wrap: wrap; }
+nav.topnav a {
+  text-decoration: none;
+  color: var(--muted);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px; font-weight: 600;
+  transition: all .15s;
+}
+nav.topnav a:hover { color: var(--ink); background: var(--code-bg); }
+nav.topnav a.active {
+  color: #fff; background: var(--accent);
+}
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 30px 22px 80px;
+}
+header.page-head {
+  margin: 10px 0 28px;
+  padding: 24px 26px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fff, #faf7ee);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+header.page-head h1 {
+  margin: 0 0 6px;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+}
+header.page-head p { margin: 0; color: var(--muted); }
+.notice {
+  margin: 20px 0;
+  padding: 16px 18px;
+  border-radius: 10px;
+  background: var(--amber-soft);
+  border-left: 4px solid var(--amber);
+  color: #5a3a00;
+}
+.notice strong { color: var(--amber); }
+.notice p { margin: 6px 0; }
+.notice p:first-child { margin-top: 0; }
+.notice p:last-child { margin-bottom: 0; }
+.question {
+  margin: 28px 0;
+  padding: 20px 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.question h3 {
+  margin: 0 0 8px;
+  font-size: 17px;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+}
+.question .stem { margin: 0 0 12px; font-weight: 500; }
+.choices { list-style: none; padding: 0; margin: 0 0 12px; }
+.choices li {
+  padding: 8px 12px;
+  margin: 4px 0;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  color: #333;
+}
+.choices li.correct {
+  background: var(--green-soft);
+  border-color: #bfe0cd;
+  color: var(--green);
+  font-weight: 600;
+}
+.choices li.correct::after {
+  content: "  ✓ CORRECT";
+  color: var(--green);
+  font-weight: 700;
+  margin-left: 8px;
+  font-size: 13px;
+}
+.explanation {
+  margin: 12px 0 0;
+  padding: 14px 16px;
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+}
+.explanation strong { color: var(--accent); }
+.explanation .math-block {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: var(--code-bg);
+  border-radius: 6px;
+  font-family: "SF Mono", Consolas, Monaco, monospace;
+  font-size: 13.5px;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.warning {
+  margin: 12px 0 0;
+  padding: 14px 16px;
+  background: var(--red-soft);
+  border-left: 4px solid var(--red);
+  border-radius: 8px;
+  color: #651612;
+}
+.warning strong { color: var(--red); }
+.trap {
+  margin: 22px 0;
+  padding: 16px 18px;
+  background: var(--red-soft);
+  border-left: 4px solid var(--red);
+  border-radius: 8px;
+}
+.trap strong { color: var(--red); font-weight: 700; }
+.formula {
+  margin: 16px 0;
+  padding: 14px 16px;
+  background: var(--green-soft);
+  border-left: 4px solid var(--green);
+  border-radius: 8px;
+  font-family: "SF Mono", Consolas, Monaco, monospace;
+  font-size: 14px;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.formula strong { color: var(--green); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: block; margin-bottom: 6px; font-size: 14px; letter-spacing: 0.02em; }
+.example {
+  margin: 16px 0;
+  padding: 14px 16px;
+  background: #fbf8f0;
+  border-left: 4px solid #c7a85a;
+  border-radius: 8px;
+}
+.example strong { color: #8a6a1e; }
+h1.part {
+  margin: 50px 0 4px;
+  padding: 18px 22px;
+  background: linear-gradient(135deg, #1F4E79, #2d6cdf);
+  color: #fff;
+  border-radius: 12px;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  box-shadow: var(--shadow);
+}
+h1.part:first-of-type { margin-top: 20px; }
+p.part-intro {
+  margin: -4px 0 20px;
+  padding: 0 4px;
+  color: var(--muted);
+  font-style: italic;
+  font-size: 15px;
+}
+h2.cluster {
+  margin: 42px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+.callout {
+  margin: 16px 0;
+  padding: 14px 16px;
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+}
+.callout strong { color: var(--accent); display: block; margin-bottom: 6px; letter-spacing: 0.02em; }
+ul.plain-list {
+  margin: 10px 0 10px 4px;
+  padding-left: 22px;
+}
+ul.plain-list li { margin: 4px 0; }
+h3.subhead {
+  margin: 24px 0 8px;
+  font-size: 17px;
+  color: var(--ink);
+}
+table.data {
+  width: 100%;
+  margin: 16px 0;
+  border-collapse: collapse;
+  background: var(--surface);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+table.data th, table.data td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 14.5px;
+}
+table.data thead th {
+  background: var(--code-bg);
+  font-weight: 700;
+}
+table.data tbody tr:last-child td { border-bottom: none; }
+p { margin: 10px 0; }
+strong { font-weight: 700; }
+footer.page-foot {
+  margin: 60px 0 0;
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 13.5px;
+  text-align: center;
+}
+footer.page-foot a { color: var(--accent); text-decoration: none; }
+@media (max-width: 600px) {
+  main { padding: 20px 14px 60px; }
+  header.page-head { padding: 18px 18px; }
+  header.page-head h1 { font-size: 22px; }
+  .question { padding: 16px 14px; }
+  nav.topnav .inner { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <div class="inner">
+    <div class="brand">EMBA Investment Midterm <small>· Study Hub</small></div>
+    <div class="links">
+    <a href="https://amsamms.github.io/Investment-Quiz/">Practice Quiz</a>
+    <a href="plain-english.html" class="active">Plain English Summary</a>
+    <a href="concepts-guide.html">Concepts Guide</a>
+    </div>
+  </div>
+</nav>
+<main>
+<header class="page-head">
+  <h1>Plain English Content Summary</h1>
+  <p>All three lectures explained from scratch, assuming zero prior knowledge of investing. Three parts, twelve sections, every term defined.</p>
+</header>
+<h1 class="part">PART I: THE INVESTMENT ENVIRONMENT</h1>
+<p class="part-intro">What is investing and how does the financial world work?</p>
+<h2 class="cluster">1. What Is Investing?</h2>
+<p>At its simplest, investing means putting your money to work so it grows over time. Instead of keeping all your cash under your mattress (where it slowly loses value because prices go up every year due to inflation), you put it into things that you hope will be worth more in the future.</p>
+<p>Why bother? Because of inflation. If a loaf of bread costs $3 today and prices go up 3% per year, that same bread will cost about $4 in ten years. If your money just sat in a drawer, you could buy less and less over time. Investing is how you try to stay ahead.</p>
+<p>There are many things you can invest in: you can buy a piece of a company (stocks), lend money to a government or company and earn interest (bonds), buy real estate, or use more complex financial tools. Each option has different levels of risk and potential reward.</p>
+<h2 class="cluster">2. Real Assets vs. Financial Assets</h2>
+<p>This is one of the most important distinctions in this course. Everything valuable in the economy can be divided into two categories:</p>
+<h3 class="subhead">Real Assets -- The Things That Actually Produce Stuff</h3>
+<p>Real assets are physical, tangible things that help produce goods and services or have value on their own. Think of:</p>
+<p><strong>Land:</strong> The ground that factories, farms, and buildings sit on.</p>
+<p><strong>Buildings:</strong> Factories, offices, warehouses where work gets done.</p>
+<p><strong>Machines and Equipment:</strong> The tools, computers, assembly lines that actually make products.</p>
+<p><strong>Consumer durables:</strong> Long-lasting goods people own, like cars, appliances, furniture.</p>
+<p><strong>Knowledge and Patents:</strong> Ideas, technology, expertise that create value.</p>
+<p>The key idea: real assets GENERATE wealth. They are what make the economy actually produce things.</p>
+<h3 class="subhead">Financial Assets -- Paper Claims on Real Assets</h3>
+<p>Financial assets are NOT physical things. They are contracts or certificates that give you a claim on someone else&#39;s money or real assets. Examples:</p>
+<p><strong>Stocks (Equity):</strong> A certificate saying you own a small piece of a company. If the company does well, your stock goes up in value.</p>
+<p><strong>Bonds (Debt):</strong> A certificate saying someone (a government or company) owes you money and will pay you back with interest.</p>
+<p><strong>Derivatives:</strong> Contracts whose value depends on the price of something else (we will explain these shortly).</p>
+<p>The key idea: financial assets DO NOT generate wealth themselves. They just determine WHO gets the income that real assets produce. Real assets generate; financial assets allocate.</p>
+<div class="formula"><strong>KEY CONCEPT</strong>Real assets PRODUCE wealth (factories, equipment, land). Financial assets ALLOCATE wealth (stocks, bonds decide who gets what share of the income). Common stock is a FINANCIAL asset, not a real asset -- even though it represents ownership of a company that has real assets.</div>
+<h2 class="cluster">3. Types of Financial Assets</h2>
+<p>Financial assets come in three main flavors:</p>
+<h3 class="subhead">Debt Securities (Fixed Income) -- You Are the Lender</h3>
+<p>When you buy a bond or a debt security, you are essentially LENDING money to someone. They promise to pay you back, plus interest. It is called &#39;fixed income&#39; because the interest payments are usually fixed amounts on a regular schedule.</p>
+<p>Debt securities are split into two categories by how soon they mature (how soon you get your money back):</p>
+<p><strong>Money Market Securities (Short-term, less than 1 year):</strong> These are very safe, very liquid (easy to convert to cash) investments:</p>
+<ul class='plain-list'>
+  <li>Treasury Bills (T-Bills): Short-term loans to the US government. Very safe.</li>
+  <li>Certificates of Deposit (CDs): Deposits at a bank for a fixed period, earning interest.</li>
+  <li>Commercial Paper: Short-term borrowing by large corporations.</li>
+  <li>Banker&#39;s Acceptance: A bank guarantees payment -- used in international trade.</li>
+</ul>
+<p><strong>Capital Market Securities (Long-term, more than 1 year):</strong> These include government bonds and corporate bonds. Higher risk than money market, but higher returns.</p>
+<h3 class="subhead">Equity Securities (Stocks) -- You Are an Owner</h3>
+<p><strong>Common Stock:</strong> When you buy a share of common stock, you own a tiny piece of that company. If the company makes profits, you may get dividends (a share of profits) and the stock price may rise. But if the company does badly, your stock can lose value. Unlike bonds, there is no guarantee of any payment.</p>
+<p><strong>Preferred Stock:</strong> A hybrid between stocks and bonds. You get fixed dividend payments (like bonds) but you also have ownership (like stocks). It is called &#39;preferred&#39; because preferred stockholders get paid before common stockholders.</p>
+<h3 class="subhead">Derivative Securities -- Contracts Based on Something Else</h3>
+<p>A derivative is a financial contract whose value is DERIVED FROM (depends on) the price of something else, called the &#39;underlying asset.&#39;</p>
+<p><strong>Call Option:</strong> A contract giving you the RIGHT (but not obligation) to BUY a stock at a certain price before a certain date.</p>
+<p><strong>Futures Contract:</strong> An agreement to buy or sell something at a specific price on a specific future date.</p>
+<p>Important: A share of common stock is NOT a derivative. It is the underlying asset itself. Options and futures are derivatives because their value depends on the stock price.</p>
+<div class="formula"><strong>KEY CONCEPT</strong>ALL three (debt, equity, derivatives) are financial assets. Common stock is NOT a money market security (money market = short-term debt only). Common stock is NOT a derivative (it is the real ownership, not a contract based on something else).</div>
+<h2 class="cluster">4. The Players in the Investment World</h2>
+<p>Several types of people and organizations participate in financial markets:</p>
+<h3 class="subhead">Investment Bankers</h3>
+<p>Investment bankers are NOT regular banks. They do NOT take deposits or make loans. Instead, they:</p>
+<p>1. Act as middlemen between companies that want to sell new stock and the investors who buy it.</p>
+<p>2. Advise companies on their financial needs and help them find buyers for new securities.</p>
+<p>Think of them as the matchmakers of the financial world -- they help companies raise money by connecting them with investors.</p>
+<h3 class="subhead">Specialists (Designated Market Makers)</h3>
+<p>Specialists are people on the stock exchange floor who have a very specific job: keep the market running smoothly for the stocks assigned to them. They do several things:</p>
+<ul class='plain-list'>
+  <li>They maintain a &#39;book&#39; of all the outstanding buy and sell orders that have not been executed yet.</li>
+  <li>They earn income from commissions and from the &#39;spread&#39; (the difference between buying and selling prices).</li>
+  <li>They stand ready to buy or sell from their OWN accounts if needed, to keep trading going.</li>
+  <li>They CAN trade in their own accounts (this is important -- some people think they cannot, but they can).</li>
+</ul>
+<p>Their purpose: to maintain a liquid and orderly market. &#39;Liquid&#39; means you can always buy or sell without waiting too long.</p>
+<h3 class="subhead">Financial Intermediaries</h3>
+<p>These are organizations that stand BETWEEN savers (people with extra money) and borrowers (people who need money). They pool money from many people and invest it. Examples:</p>
+<p><strong>Commercial Banks:</strong> Take deposits from you, lend them to businesses and homebuyers.</p>
+<p><strong>Insurance Companies:</strong> Collect premiums from policyholders, invest the money until claims need to be paid.</p>
+<p><strong>Investment Companies (Mutual Funds):</strong> Pool money from many investors and buy a diversified portfolio of stocks or bonds.</p>
+<p>Why do we need them? Because small individual investors cannot efficiently: (1) diversify (spread risk), (2) gather information (research companies), or (3) monitor their investments.</p>
+<h3 class="subhead">Brokers</h3>
+<p>Brokers are the people/firms you use to actually buy and sell securities. There are two types:</p>
+<p><strong>Full-Service Brokers (e.g., Merrill Lynch):</strong> Execute your trades AND provide research, advice, and recommendations. More expensive.</p>
+<p><strong>Discount Brokers (e.g., Schwab, Fidelity, E*Trade):</strong> Execute your trades but offer little to no investment advice or research. Cheaper.</p>
+<h2 class="cluster">5. The Investment Process</h2>
+<p>When you invest, you make decisions at two levels:</p>
+<h3 class="subhead">Asset Allocation -- The Big Decision</h3>
+<p>This is about deciding HOW to split your money across broad categories. For example: &#39;I will put 60% in stocks, 30% in bonds, and 10% in cash.&#39; You are not picking specific investments yet -- just deciding the overall mix. This is the single most important investment decision you make.</p>
+<h3 class="subhead">Security Selection -- The Specific Picks</h3>
+<p>After you decide on your mix (say 60% stocks), security selection is about choosing WHICH specific stocks to buy. Should you buy Apple? Google? A small tech startup? This is the detailed picking within each category.</p>
+<h3 class="subhead">Active vs. Passive Management</h3>
+<p><strong>Active Management:</strong> You (or a fund manager) spend time and money researching stocks, trying to find bargains, timing the market. Goal: beat the market average.</p>
+<p><strong>Passive Management:</strong> You buy a diversified portfolio (like an index fund that tracks the S&amp;P 500) and just hold it. No research, no stock picking. Goal: match the market average at low cost.</p>
+<p>The Efficient Markets Hypothesis (EMH) says that stock prices already reflect all available information, so it is nearly impossible to consistently beat the market through analysis. If EMH is true, passive management is the smarter choice because you save on research costs and trading fees.</p>
+<div class="formula"><strong>KEY CONCEPT</strong>Asset allocation = broad split (stocks vs bonds vs cash). Security selection = specific picks within each category. EMH says passive &gt; active because you cannot consistently beat the market.</div>
+<h1 class="part">PART II: HOW SECURITIES ARE TRADED</h1>
+<p class="part-intro">Markets, brokers, orders, and the mechanics of trading</p>
+<h2 class="cluster">6. Primary Market vs. Secondary Market</h2>
+<h3 class="subhead">Primary Market -- Where New Securities Are Born</h3>
+<p>When a company issues stock for the FIRST TIME (called an IPO -- Initial Public Offering) or issues new bonds, this happens in the primary market. The company receives the money from these sales.</p>
+<p>Investment bankers help companies in the primary market by underwriting (guaranteeing the sale of) new securities and distributing them to investors.</p>
+<h3 class="subhead">Secondary Market -- Where Securities Are Resold</h3>
+<p>After securities are issued, investors trade them among THEMSELVES in the secondary market. The company does NOT receive any money from these trades. Think of it like this:</p>
+<p>Primary market = buying a new car from the manufacturer. Secondary market = buying a used car from another person.</p>
+<p>The secondary market operates in TWO venues:</p>
+<p><strong>Stock Exchanges (e.g., NYSE):</strong> Organized, physical or electronic marketplaces with strict rules.</p>
+<p><strong>OTC Market (e.g., NASDAQ):</strong> Over-The-Counter -- a network of dealers who trade electronically, not on a centralized exchange floor.</p>
+<h2 class="cluster">7. Types of Orders</h2>
+<p>When you want to buy or sell a stock, you give your broker an instruction called an &#39;order.&#39; There are several types:</p>
+<h3 class="subhead">Market Order -- &#39;Do It Now!&#39;</h3>
+<p>A market order says: &#39;Buy (or sell) this stock RIGHT NOW at whatever the current best price is.&#39; You get the trade done immediately, but you might not get the exact price you expected because prices change every second.</p>
+<p>Important: The word &#39;market&#39; in &#39;market order&#39; does NOT mean a specific exchange. It means &#39;at the current market price.&#39;</p>
+<h3 class="subhead">Limit Order -- &#39;Only at My Price or Better&#39;</h3>
+<p>A limit order sets a price boundary:</p>
+<p><strong>Limit-Buy Order:</strong> &#39;Buy this stock, but ONLY at $X or LOWER.&#39; You will never pay more than your limit price. Example: stock is at $50, you set a limit-buy at $45. The broker waits until the price drops to $45 before buying.</p>
+<p><strong>Limit-Sell Order:</strong> &#39;Sell this stock, but ONLY at $X or HIGHER.&#39; You will never sell for less than your limit price.</p>
+<p>The tradeoff: limit orders guarantee your PRICE but do NOT guarantee the trade will happen (the price might never reach your limit).</p>
+<h3 class="subhead">Stop Order -- &#39;Trigger When Price Hits a Level&#39;</h3>
+<p>A stop order is like a trap that springs when the price reaches a certain level. Once triggered, it becomes a market order.</p>
+<p><strong>Stop-Loss (Sell Stop) Order:</strong> &#39;If the price DROPS to $X, automatically sell my stock.&#39; This protects you from big losses on stocks you own. Example: you bought at $50, stock is at $65, you set a stop-loss at $60. If the stock drops to $60, it automatically sells -- protecting most of your gain.</p>
+<p><strong>Stop-Buy (Buy Stop) Order:</strong> &#39;If the price RISES to $X, automatically buy the stock.&#39; This is used by short sellers to limit their losses. If you sold short at $80 and the price is rising, a stop-buy at $85 would trigger a buy at $85 to close your position before losses get worse.</p>
+<div class="formula"><strong>ORDER TYPE CHEAT SHEET</strong>PROTECT gains on stock you OWN (long position) --&gt; Stop-Loss order PROTECT against losses on SHORT SALE --&gt; Stop-Buy order BUY at a bargain price --&gt; Limit-Buy order SELL at a good price --&gt; Limit-Sell order Trade IMMEDIATELY regardless of price --&gt; Market order</div>
+<h2 class="cluster">8. Settlement</h2>
+<p>When you buy a stock, the ownership does not transfer instantly. &#39;Settlement&#39; is the process of legally transferring ownership and completing payment.</p>
+<p><strong>Regular Way Settlement: T+3</strong> (three business days after the trade date). You buy on Monday, settlement happens Thursday. This is NOT one week.</p>
+<p><strong>Street Name:</strong> Most investors let their broker hold their shares in the broker&#39;s name (&#39;street name&#39;). You still own the shares and get statements showing your holdings, but the broker handles the paperwork.</p>
+<h2 class="cluster">9. Trading Costs</h2>
+<p>Buying and selling stocks is not free. Three types of costs eat into your returns:</p>
+<p><strong>1. Broker&#39;s Commission:</strong> The fee you pay your broker for executing the trade.</p>
+<p><strong>2. Bid-Ask Spread:</strong> The difference between the price buyers are willing to pay (bid) and the price sellers are asking (ask). You always buy at the higher ask price and sell at the lower bid price -- the spread is a hidden cost.</p>
+<p><strong>3. Price Concession:</strong> If you are trading a large quantity, you might have to accept a worse price to get the trade done, because there are not enough buyers/sellers at your preferred price.</p>
+<h2 class="cluster">10. Regulation and Investor Protection</h2>
+<p><strong>SEC (Securities and Exchange Commission):</strong> The main government agency that oversees the securities markets. Created in 1934. Enforces securities laws, requires companies to register when selling new shares, and investigates fraud and insider trading.</p>
+<p><strong>FINRA (Financial Industry Regulatory Authority):</strong> A self-regulatory organization that examines securities firms and enforces rules. The largest regulator of US securities firms.</p>
+<p><strong>SIPC (Securities Investor Protection Corporation):</strong> A non-profit that insures your brokerage account against the broker going bankrupt (NOT against your stocks losing value -- that is your risk).</p>
+<h1 class="part">PART III: MARGIN TRADING AND SHORT SELLING</h1>
+<p class="part-intro">Using borrowed money and betting on price drops</p>
+<h2 class="cluster">11. Margin Trading -- Investing With Borrowed Money</h2>
+<p>Imagine you want to buy $10,000 worth of stock but you only have $5,000. Your broker says: &#39;I will lend you the other $5,000.&#39; That is margin trading. You put up part of the cost (your margin), and the broker lends you the rest.</p>
+<h3 class="subhead">Why Do People Use Margin?</h3>
+<p>Because it AMPLIFIES your returns. If the stock goes up 10%, you do not just earn 10% on your $5,000 -- you earn 10% on the full $10,000 ($1,000 gain), which is a 20% return on YOUR money. Sounds great, right? But the flip side is just as powerful: if the stock drops 10%, you lose $1,000 -- a 20% loss on your $5,000. Margin is a double-edged sword.</p>
+<h3 class="subhead">Key Concepts -- Understanding Margin Step by Step</h3>
+<p><strong>Initial Margin:</strong> The minimum percentage of the purchase price YOU must put up with your own money when you first buy. If the initial margin is 50%, and you buy $10,000 of stock, you must provide at least $5,000 of your own money.</p>
+<p><strong>Your Equity (Margin):</strong> This is the part of the investment that is truly YOURS. It equals the current value of the stock MINUS what you owe the broker.</p>
+<p><strong>The Loan:</strong> This is what you borrowed from the broker. It stays FIXED (ignoring interest) regardless of what happens to the stock price. If you borrowed $3,500, you still owe $3,500 whether the stock goes up or down.</p>
+<p><strong>Actual Margin:</strong> At any point in time, your actual margin is the percentage of the current stock value that is your equity. As the stock price changes, your actual margin changes -- but your loan stays the same.</p>
+<p>Think of it like buying a house with a mortgage. If you buy a $200,000 house with $60,000 down and a $140,000 mortgage:</p>
+<ul class='plain-list'>
+  <li>Your equity = $60,000, your loan = $140,000, your margin = 30%</li>
+  <li>If the house rises to $250,000: equity = $250,000 - $140,000 = $110,000, margin = 44%</li>
+  <li>If the house falls to $150,000: equity = $150,000 - $140,000 = $10,000, margin = 6.7%</li>
+</ul>
+<p>Stocks on margin work exactly the same way.</p>
+<h3 class="subhead">Maintenance Margin and Margin Calls</h3>
+<p>The maintenance margin is the MINIMUM equity percentage your broker allows. If your actual margin drops below this level, you get a &#39;margin call&#39; -- a demand from your broker to deposit more cash or securities immediately.</p>
+<p>IMPORTANT: A margin call is triggered by the MAINTENANCE margin, NOT the initial margin. The maintenance margin is always LOWER than the initial margin. For example, if initial margin is 50% and maintenance margin is 30%, you only get a margin call when your equity drops below 30%.</p>
+<h3 class="subhead">How the Margin Call Price Formula Works -- An Intuition</h3>
+<p>You want to find: &#39;At what stock price does my equity become exactly equal to the maintenance margin percentage?&#39;</p>
+<p>Your equity at any price = (Number of shares x Current price) - Loan</p>
+<p>Your actual margin at any price = Your equity / Total stock value</p>
+<p>Set actual margin = maintenance margin and solve for the price:</p>
+<p>(Shares x Price - Loan) / (Shares x Price) = Maintenance Margin</p>
+<p>Rearranging: Price = Loan / [Shares x (1 - Maintenance Margin)]</p>
+<p>This is not something to memorize -- it comes directly from asking &#39;at what price is my equity exactly at the minimum allowed level?&#39;</p>
+<div class="example"><strong>WORKED EXAMPLE</strong>You buy 100 shares at $70 with 50% initial margin, 30% maintenance margin. Loan = 100 x $70 x (1 - 0.50) = $3,500 Margin call price = $3,500 / [100 x (1 - 0.30)] = $3,500 / 70 = $50 Below $50 per share, you will receive a margin call.</div>
+<h3 class="subhead">Rate of Return on a Margin Purchase</h3>
+<p>Your rate of return is based on YOUR money, not the total investment. The formula is just: (What you end up with - What you started with) / What you started with.</p>
+<p>What you started with = your initial equity (shares x price x initial margin %).</p>
+<p>What you end up with = current stock value - the loan you still owe.</p>
+<div class="example"><strong>WORKED EXAMPLE</strong>Buy 300 shares at $60, initial margin 60%. Sell at $45. Initial equity = 300 x $60 x 0.60 = $10,800 (YOUR money) Loan = $18,000 - $10,800 = $7,200 (broker&#39;s money) Sell: proceeds = 300 x $45 = $13,500 After repaying loan: $13,500 - $7,200 = $6,300 Return = ($6,300 - $10,800) / $10,800 = -41.67% The stock dropped 25% but YOU lost 41.67% -- leverage magnified the loss!</div>
+<h2 class="cluster">12. Short Selling -- Profiting From Price Drops</h2>
+<p>Normally, you buy a stock hoping it goes UP. But what if you think a stock&#39;s price will go DOWN? Short selling lets you profit from a price decline.</p>
+<h3 class="subhead">How Short Selling Works -- Step by Step</h3>
+<p>1. You BORROW shares from your broker (you do not own them).</p>
+<p>2. You immediately SELL those borrowed shares at today&#39;s price.</p>
+<p>3. You WAIT for the price to drop.</p>
+<p>4. You BUY the shares back at the (hopefully lower) price.</p>
+<p>5. You RETURN the shares to your broker.</p>
+<p>6. Your PROFIT is the difference between your selling price and your buying price.</p>
+<p>Think of it like borrowing your neighbor&#39;s lawnmower (worth $200), selling it, waiting for lawnmower prices to drop to $150, buying a new one, returning it to your neighbor, and keeping the $50 difference.</p>
+<h3 class="subhead">The Risks of Short Selling</h3>
+<p>When you buy a stock normally (go &#39;long&#39;), the MOST you can lose is 100% (the stock goes to $0). But when you short sell, your potential losses are UNLIMITED because the stock price can keep rising forever. If you shorted at $50 and the stock goes to $500, you have to buy it back at $500 -- a devastating loss.</p>
+<h3 class="subhead">Initial Investment in a Short Sale</h3>
+<p>When you short sell, you must deposit a margin with your broker as security. Your initial investment = number of shares x price per share x initial margin percentage.</p>
+<div class="example"><strong>WORKED EXAMPLE</strong>Short sell 200 shares at $60, initial margin 60%. Sale proceeds = 200 x $60 = $12,000 (this money is held by the broker) Your deposit (initial investment) = 60% x $12,000 = $7,200 If price drops to $40, you buy back for $8,000. Profit = $12,000 - $8,000 = $4,000. If price rises to $80, you buy back for $16,000. Loss = $12,000 - $16,000 = -$4,000.</div>
+<h3 class="subhead">Short Sale Profit/Loss Calculation</h3>
+<p>Your profit or loss on a short sale is straightforward:</p>
+<p>Profit = (Price you sold at - Price you bought back at) x Number of shares</p>
+<p>If the buy-back price is LOWER than the sell price = profit (you sold high, bought low).</p>
+<p>If the buy-back price is HIGHER than the sell price = loss (you sold low, bought high).</p>
+<div class="example"><strong>WORKED EXAMPLE</strong>Short sell 100 shares at $40. Price goes to $53. You close the position. Result = ($40 - $53) x 100 = -$1,300 (a LOSS of $1,300) You lost because the price went UP when you needed it to go DOWN.</div>
+<h3 class="subhead">Protecting Your Short Position</h3>
+<p>If you are short and the price starts rising (bad for you), you can use a STOP-BUY order. This says: &#39;if the price reaches $X, automatically buy the stock and close my short position.&#39; It caps your losses.</p>
+<p>IMPORTANT: You use a stop-BUY (not a limit-buy) because you need an order that triggers when the price RISES. A limit-buy order only executes at or below the limit price, which does not help when you need protection against a rising price.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><h3 class="subhead">MARGIN TRADING: THE BOTTOM LINE</h3>
+<p>Margin trading MAGNIFIES both gains AND losses. It does NOT minimize losses. It does NOT maximize returns while minimizing losses. It is a double-edged sword. Use it carefully.</p></td>
+</tr>
+</tbody>
+</table>
+<h3 class="subhead">END OF CONTENT SUMMARY</h3>
+<p>Good luck on your midterm!</p>
+<footer class="page-foot">
+  <p>EMBA Investment &amp; Portfolio Management · Midterm Prep ·
+  <a href="index.html">Quiz</a> ·
+  <a href="answer-key.html">Answer Key</a> ·
+  <a href="concepts-guide.html">Concepts Guide</a></p>
+</footer>
+</main>
+</body>
+</html>
